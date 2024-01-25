@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId      String  @id @default(uuid()) @db.Uuid
+  phoneNumber String  @unique
+  name        String?
+  countryCode String?
+  longitude   String?
+  latitude    String?
+}
+
+model Broadcast {
+  broadcastId String   @id @default(uuid()) @db.Uuid
+  senderUid   String
+  text        String
+  longitude   String?
+  latitude    Boolean?
+}
