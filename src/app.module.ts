@@ -11,6 +11,9 @@ import { jwtConstants } from "./auth/constants";
 import { BroadcastController } from './broadcast/broadcast.controller';
 import { BroadcastService } from './broadcast/broadcast.service';
 import { BroadcastModule } from './broadcast/broadcast.module';
+import { CircleModule } from './circle/circle.module';
+import { CircleController } from "./circle/circle.controller";
+import { CircleService } from "./circle/circle.service";
 
 @Module({
   imports: [
@@ -22,8 +25,9 @@ import { BroadcastModule } from './broadcast/broadcast.module';
       signOptions: { expiresIn: "15d" },
     }),
     BroadcastModule,
+    CircleModule,
   ],
-  controllers: [AppController, AuthController, BroadcastController],
-  providers: [AppService, AuthService, PrismaService, BroadcastService],
+  controllers: [AppController, AuthController, CircleController],
+  providers: [AppService, AuthService, PrismaService,CircleService],
 })
 export class AppModule {}

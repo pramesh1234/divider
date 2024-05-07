@@ -1,7 +1,7 @@
 export class UserDto {
   name: string;
 
-  longitude: string;
+  longitude: number;
 
-  latitude: string;
+  latitude: number;
 }
