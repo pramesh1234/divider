@@ -3,11 +3,7 @@
     "builds": [
       {
         "src": "dist/main.js",
-        "use": "@vercel/node",  "config": {
-          "prisma": {
-            "build": "npx prisma generate"
-          }
-        }
+        "use": "@vercel/node"
       }
     ],
     "routes": [
@@ -15,16 +11,16 @@
         "src": "/(.*)",
         "dest": "dist/main.js",
         "methods": [
-          "GET",
-          "POST",
-          "PUT",
-          "PATCH",
-          "OPTIONS",
-          "DELETE",
-          "HEAD",
-          "CONNECT",
-          "TRACE"
-      ]
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "OPTIONS",
+                "DELETE",
+                "HEAD",
+                "CONNECT",
+                "TRACE"
+            ]
       }
     ]
   }
