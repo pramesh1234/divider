@@ -5,7 +5,7 @@
         "src": "dist/main.js",
         "use": "@vercel/node",  "config": {
           "prisma": {
-            "build": "prisma generate"
+            "build": "npx prisma generate"
           }
         }
       }
