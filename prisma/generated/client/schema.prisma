@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  output          = "./generated/client"
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+model User {
+  user_id      String                                 @id @unique
+  phone_number String                                 @unique
+  name         String?
+  country_code String?
+  location     Unsupported("geography(Point, 4326)")?
+  created_at   DateTime                               @default(now())
+}
+
+model Broadcast {
+  broadcast_id String                                 @id @unique
+  sender_id    String
+  text         String
+  b_location   Unsupported("geography(Point, 4326)")?
+  created_at   DateTime                               @default(now())
+}
+
+model Circle {
+  circle_id    String   @id @unique
+  broadcast_id String
+  receiver_id  String
+  is_expired   Boolean
+  created_at   DateTime @default(now())
+}
