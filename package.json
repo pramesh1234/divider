@@ -8,6 +8,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "nest build",
+    "clean": "rm -rf node_modules",
     "postinstall": "npx prisma generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
