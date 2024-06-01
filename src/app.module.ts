@@ -14,6 +14,8 @@ import { BroadcastModule } from './broadcast/broadcast.module';
 import { CircleModule } from './circle/circle.module';
 import { CircleController } from "./circle/circle.controller";
 import { CircleService } from "./circle/circle.service";
+import { PrismaClient } from '@prisma/client';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
