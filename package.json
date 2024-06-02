@@ -7,7 +7,8 @@
   "license": "UNLICENSED",
   "type": "commonjs",
   "scripts": {
-    "build": "nest build",
+    "generate:prisma": "prisma generate",
+    "build": "npm run generate:prisma && tsc",
     "clean": "rm -rf node_modules",
     "postinstall": "npx prisma generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
