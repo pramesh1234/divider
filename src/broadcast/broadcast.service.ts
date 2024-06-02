@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { BroadCastDto } from './dto/broadcast.dto';
-import { Prisma } from '@prisma/client';
 import { uuid } from 'uuidv4';
 import { CircleService } from 'src/circle/circle.service';
 

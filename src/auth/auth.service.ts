@@ -1,6 +1,5 @@
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
-import { Prisma, PrismaClient } from "@prisma/client";
 import { Cache } from "cache-manager";
 import { PrismaService } from "src/prisma.service";
 import { CachedData } from "./OtpCacheModel";

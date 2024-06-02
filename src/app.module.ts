@@ -8,13 +8,10 @@ import { PrismaService } from "./prisma.service";
 import { CacheModule } from "@nestjs/cache-manager";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./auth/constants";
-import { BroadcastController } from './broadcast/broadcast.controller';
-import { BroadcastService } from './broadcast/broadcast.service';
 import { BroadcastModule } from './broadcast/broadcast.module';
 import { CircleModule } from './circle/circle.module';
 import { CircleController } from "./circle/circle.controller";
 import { CircleService } from "./circle/circle.service";
-import { PrismaClient } from '@prisma/client';
 
 @Module({
   imports: [
