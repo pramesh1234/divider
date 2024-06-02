@@ -7,9 +7,10 @@
   "license": "UNLICENSED",
   "type": "commonjs",
   "scripts": {
-    "build": "nest build",
+    "build": "npx prisma generate && npm run build",
     "clean": "rm -rf node_modules",
-    "postinstall": "npx prisma generate",
+    "postinstall": "npx prisma generate", 
+     "postdeploy": "ls -l node_modules/.prisma/client",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
