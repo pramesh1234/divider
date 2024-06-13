@@ -7,11 +7,12 @@
   "license": "UNLICENSED",
   "type": "commonjs",
   "scripts": {
-    "build": "npm run build",
+    "build": "nest build",
     "clean": "rm -rf node_modules",
     "postinstall": "npx prisma generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "node dist/main",
+    "dev": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -20,7 +21,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prebuild": "rimraf dist && npx prisma generate",
+    "prisma-generate": "npx prisma generate",
+    "prisma-generate:dev": "npx prisma generate",
+    "prisma-db-push": "npx prisma db push",
+    "prisma-db-push:dev": "npx prisma db push"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.0",

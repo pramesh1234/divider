@@ -143,7 +143,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/hood/nestWorkSpace/dividerApp/divider/prisma/generated/client",
+      "value": "/Users/apple/Desktop/Vikki/tests/divider/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
