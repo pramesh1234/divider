@@ -32,7 +32,7 @@ export class BroadcastService {
           const sUid = user[0].userId
            xLongitude = parseFloat(match[1]);
            yLatitude = parseFloat(match[2]);
-         await prisma.$queryRaw`INSERT INTO "Broadcast" ("broadcast_id","sender_id", "text", "b_location","created_at") VALUES ( ${broadcastPoint.broadcastId}:: uuid,${broadcastPoint.senderUid}, ${broadcastPoint.broadcast},ST_SetSRID(ST_MakePoint(${xLongitude}, ${yLatitude}), 4326)::point,Now())`;
+           await prisma.$queryRaw`INSERT INTO "Broadcast" ("broadcast_id","sender_id", "text", "b_location","created_at") VALUES ( ${broadcastPoint.broadcastId}:: uuid,${broadcastPoint.senderUid}, ${broadcastPoint.broadcast},ST_SetSRID(ST_MakePoint(${xLongitude}, ${yLatitude}), 4326)::point,Now())`;
                 
         }}}})
         const data ={
