@@ -8,7 +8,7 @@ import { CircleService } from 'src/circle/circle.service';
 export class BroadcastService {
     constructor(private prismaService : PrismaService,private circleService:CircleService){}
 
-    async sendBroadcast(senderUid:string, text:string): Promise<any>{
+    async sendBroadcast(senderUid:string, text:string,distance:number): Promise<any>{
         const broadcastId = uuid()
         var xLongitude:number
         var yLatitude:number
@@ -40,7 +40,7 @@ export class BroadcastService {
             senderUid,
             broadcast :text}
           await prisma.user.create(data);
-          this.circleService.updateCircle(broadcastId,xLongitude,yLatitude)
+          this.circleService.updateCircle(broadcastId,xLongitude,yLatitude,distance)
         return data
 }
 

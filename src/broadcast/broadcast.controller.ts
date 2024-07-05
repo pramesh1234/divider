@@ -14,9 +14,10 @@ export class BroadcastController {
     async sendBroadcast(@Body() body:BroadCastDto, @Request() req){
 
     const text = body.broadcast
+    const distance = body.distance
     const senderUid = req?.user.userId
 
-    const broadcastedData = await this.broadcastService.sendBroadcast(senderUid,text)
+    const broadcastedData = await this.broadcastService.sendBroadcast(senderUid,text,distance)
     if(broadcastedData!=null){
         return {
           data:broadcastedData,

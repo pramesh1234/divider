@@ -81,7 +81,7 @@ export class AuthService {
     }
     const location = `POINT(${poi.location.longitude} ${poi.location.latitude})`
     // ST_GeomFromText(${point}, 4326)
-   const datra = await prisma.$queryRaw`INSERT INTO "User" ( user_id, phone_number, name, country_code, location,created_at) VALUES (${poi.userId}, ${poi.phoneNumber}, ${poi.name}, ${poi.countryCode},ST_SetSRID(ST_MakePoint(${poi.location.longitude}, ${poi.location.latitude}), 4326)::point,Now())  RETURNING user_id, phone_number, name, country_code;` ;
+   const datra = await prisma.$queryRaw`INSERT INTO "User" ( user_id, phone_number, name, country_code,created_at) VALUES (${poi.userId}, ${poi.phoneNumber}, ${poi.name}, ${poi.countryCode},Now())  RETURNING user_id, phone_number, name, country_code;` ;
   }}}})
   const payload = {
     userId: userId,
