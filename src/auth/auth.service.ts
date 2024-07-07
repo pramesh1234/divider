@@ -81,7 +81,8 @@ export class AuthService {
     }
     const location = `POINT(${poi.location.longitude} ${poi.location.latitude})`
     // ST_GeomFromText(${point}, 4326)
-   const datra = await prisma.$queryRaw`INSERT INTO "User" ( user_id, phone_number, name, country_code, location,created_at) VALUES (${poi.userId}, ${poi.phoneNumber}, ${poi.name}, ${poi.countryCode},ST_SetSRID(ST_MakePoint(${poi.location.longitude}, ${poi.location.latitude}), 4326)::point,Now())  RETURNING user_id, phone_number, name, country_code;` ;
+    const pointString = `SRID=4326;POINT(${poi.location.longitude} ${poi.location.latitude})`;
+   const datra = await prisma.$queryRaw`INSERT INTO "User" ( user_id, phone_number, name, country_code, location,created_at) VALUES (${poi.userId}, ${poi.phoneNumber}, ${poi.name}, ${poi.countryCode},  ST_GeogFromText(${pointString}),Now())  RETURNING user_id, phone_number, name, country_code;` ;
   }}}})
   const payload = {
     userId: userId,
@@ -135,8 +136,8 @@ await prisma.user.create(data);
     latitude: number,
     phoneNumber: string,
   ): Promise<boolean> {
-
-    const user = await this.prismaService.$executeRaw`UPDATE "User" SET "name" = ${uName}, "location" = CAST(ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)::point as point) WHERE "phone_number" = ${phoneNumber} RETURNING *;`;
+    const pointString = `SRID=4326;POINT(${longitude} ${latitude})`;
+    const user = await this.prismaService.$executeRaw`UPDATE "User" SET "name" = ${uName}, "location" = ST_GeogFromText(${pointString}) WHERE "phone_number" = ${phoneNumber} RETURNING *;`;
     return !user;
   }
 
