@@ -3,6 +3,8 @@ import { PrismaService } from 'src/prisma.service';
 import { BroadCastDto } from './dto/broadcast.dto';
 import { uuid } from 'uuidv4';
 import { CircleService } from 'src/circle/circle.service';
+import { User } from 'prisma/generated/client';
+import { AnyARecord } from 'dns';
 
 @Injectable()
 export class BroadcastService {
@@ -27,12 +29,13 @@ export class BroadcastService {
             senderUid:  data.senderUid,
           }
     
-          const user:any = await prisma.$queryRaw`SELECT location::text FROM "User" Where "user_id" = ${senderUid}`;
-          const match = user[0].location.match(/\(([^,]+),([^)]+)\)/);
-          const sUid = user[0].userId
-           xLongitude = parseFloat(match[1]);
-           yLatitude = parseFloat(match[2]);
-           await prisma.$queryRaw`INSERT INTO "Broadcast" ("broadcast_id","sender_id", "text", "b_location","created_at") VALUES ( ${broadcastPoint.broadcastId}:: uuid,${broadcastPoint.senderUid}, ${broadcastPoint.broadcast},ST_SetSRID(ST_MakePoint(${xLongitude}, ${yLatitude}), 4326)::point,Now())`;
+          const user:any = await prisma.$queryRaw`SELECT ST_AsText(location) as location FROM "User" Where "user_id" = ${senderUid}`;
+          console.log(`match is the one userid ${JSON.stringify(user)}` )
+      
+          const sUid = senderUid
+         
+         const locationData = `SRID=4326;${user[0].location}`
+           await prisma.$queryRaw`INSERT INTO "Broadcast" ("broadcast_id","sender_id", "text", "b_location","created_at") VALUES ( ${broadcastPoint.broadcastId}:: uuid,${broadcastPoint.senderUid}, ${broadcastPoint.broadcast},ST_GeogFromText(${locationData}),Now())`;
                 
         }}}})
         const data ={
