@@ -29,9 +29,7 @@ export class BroadcastService {
             senderUid:  data.senderUid,
           }
     
-          const user:any = await prisma.$queryRaw`SELECT ST_AsText(location) as location FROM "User" Where "user_id" = ${senderUid}`;
-          console.log(`match is the one userid ${JSON.stringify(user)}` )
-      
+          const user:any = await prisma.$queryRaw`SELECT ST_AsText(location) as location FROM "User" Where "user_id" = ${senderUid}`;      
           const sUid = senderUid
          
          const locationData = `SRID=4326;${user[0].location}`

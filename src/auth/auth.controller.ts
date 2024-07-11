@@ -20,7 +20,7 @@ export class AuthController {
   public async numberValidation(@Body() body: NumberValidationDto) {
     const num = body.phoneNumber;
     if (num.length >= 10) {
-      const random = Math.floor(100000 + Math.random() * 900000);
+      const random = Math.floor(1000 + Math.random() * 9000);
       const otp = `${random}`;
       const countryCode = body?.countryCode;
       const phoneNumber = body?.phoneNumber;
