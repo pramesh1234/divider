@@ -16,6 +16,7 @@ export class CircleService {
             ST_GeogFromText(${point})
         ) <= ${distance}
     `;
+    console.log(newdata)
         for (let i = 0; i < newdata.length; i++) {
         const circleId = uuid()
         const receiverId = newdata[i].user_id
@@ -27,7 +28,7 @@ async getBroadcastByUserId(userId:string):Promise<any>{
     const rawData: Array<any> = await this.prismaService.$queryRaw`
     SELECT b_location::text, "Broadcast".broadcast_id, receiver_id, text, sender_id
     FROM "Broadcast" 
-    INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id"
+    INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id" where receiver_id = ${userId}
 `;
 
 const processedData = rawData.map((data) => {
