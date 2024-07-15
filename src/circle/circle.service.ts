@@ -6,14 +6,15 @@ import { uuid } from 'uuidv4';
 export class CircleService {
     constructor(private prismaService : PrismaService){}
 
-    async updateCircle(broadcastId:string,longitude:number,latitude:number,distance:number): Promise<any>{
+    async updateCircle(broadcastId:string,point:string,distance:number): Promise<any>{
+    
         const newdata : Array<any> = await this.prismaService.$queryRaw`
         SELECT user_id 
         FROM "User" 
         WHERE ST_Distance(
-            ST_SetSRID(ST_MakePoint("location"[0]::double precision, "location"[1]::double precision), 4326)::geography,
-            ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)::geography
-        ) <= distance
+            "location",
+            ST_GeogFromText(${point})
+        ) <= ${distance}
     `;
         for (let i = 0; i < newdata.length; i++) {
         const circleId = uuid()

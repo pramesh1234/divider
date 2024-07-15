@@ -12,8 +12,7 @@ export class BroadcastService {
 
     async sendBroadcast(senderUid:string, text:string,distance:number): Promise<any>{
         const broadcastId = uuid()
-        var xLongitude:number
-        var yLatitude:number
+         var locationData : string
         const prisma = this.prismaService.$extends({
             model: {
               user: {
@@ -32,16 +31,18 @@ export class BroadcastService {
           const user:any = await prisma.$queryRaw`SELECT ST_AsText(location) as location FROM "User" Where "user_id" = ${senderUid}`;      
           const sUid = senderUid
          
-         const locationData = `SRID=4326;${user[0].location}`
+          locationData = `SRID=4326;${user[0].location}`
            await prisma.$queryRaw`INSERT INTO "Broadcast" ("broadcast_id","sender_id", "text", "b_location","created_at") VALUES ( ${broadcastPoint.broadcastId}:: uuid,${broadcastPoint.senderUid}, ${broadcastPoint.broadcast},ST_GeogFromText(${locationData}),Now())`;
+           console.log(`dual data ${user[0].location}`)
+  
                 
         }}}})
-        const data ={
+        const data = {
             broadcastId,
             senderUid,
             broadcast :text}
           await prisma.user.create(data);
-          this.circleService.updateCircle(broadcastId,xLongitude,yLatitude,distance)
+          this.circleService.updateCircle(broadcastId,locationData,distance)
         return data
 }
 
