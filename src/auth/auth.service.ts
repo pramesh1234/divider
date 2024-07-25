@@ -132,13 +132,15 @@ await prisma.user.create(data);
 
   async updateUserData(
     uName: string,
+    firstName: string,
+    lastName: string,
     longitude: number,
     latitude: number,
     phoneNumber: string,
   ): Promise<boolean> {
   
     const pointString = `SRID=4326;POINT(${longitude?? 0.0} ${latitude?? 0.0})`;
-    const user = await this.prismaService.$executeRaw`UPDATE "User" SET "name" = ${uName}, "location" = ST_GeogFromText(${pointString}) WHERE "phone_number" = ${phoneNumber} RETURNING *;`;
+    const user = await this.prismaService.$executeRaw`UPDATE "User" SET "user_name" = ${uName},"first_name" = ${firstName},"last_name" = ${lastName}, "location" = ST_GeogFromText(${pointString}) WHERE "phone_number" = ${phoneNumber} RETURNING *;`;
     return !user;
   }
 

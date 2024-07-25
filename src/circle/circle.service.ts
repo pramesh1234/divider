@@ -16,7 +16,6 @@ export class CircleService {
             ST_GeogFromText(${point})
         ) <= ${distance}
     `;
-    console.log(newdata)
         for (let i = 0; i < newdata.length; i++) {
         const circleId = uuid()
         const receiverId = newdata[i].user_id

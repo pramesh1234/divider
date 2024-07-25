@@ -12,6 +12,7 @@ import { VerifyOtpDto } from "./dto/VerifyOtpDto";
 import { AuthService } from "./auth.service";
 import { UserDto } from "./dto/UserDto";
 import { AuthGuard } from "./auth.guard";
+import { last } from "rxjs";
 
 @Controller("auth")
 export class AuthController {
@@ -92,12 +93,16 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Post("/userUpdate")
   async updateUser(@Body() body: UserDto, @Request() req) {
-    const userName = body?.name;
+    const userName = body?.userName;
     const longitude = body?.longitude;
     const latitude = body?.latitude;
+    const firstName = body?.firstName;
+    const lastName = body?.lastName
     const phoneNumber = req?.user.phoneNumber;
     const updated = await this.authService.updateUserData(
       userName,
+      firstName,
+      lastName,
       longitude,
       latitude,
       phoneNumber,
