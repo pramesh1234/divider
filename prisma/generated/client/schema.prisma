@@ -16,9 +16,7 @@ datasource db {
 model User {
   user_id      String                                 @id @unique
   phone_number String                                 @unique
-  user_name    String?
-  first_name   String?
-  last_name    String?
+  name         String?
   country_code String?
   location     Unsupported("geography(Point, 4326)")?
   created_at   DateTime                               @default(now())
