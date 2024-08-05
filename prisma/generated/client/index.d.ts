@@ -44,8 +44,8 @@ export type Circle = $Result.DefaultSelection<Prisma.$CirclePayload>
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 export class PrismaClient<
-  T extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof T ? T['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<T['log']> : never : never,
+  ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
+  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -65,7 +65,7 @@ export class PrismaClient<
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<T, Prisma.PrismaClientOptions>);
+  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
   $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): void;
 
   /**
@@ -149,7 +149,7 @@ export class PrismaClient<
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
 
-  $extends: $Extensions.ExtendsHook<'extends', Prisma.TypeMapCb, ExtArgs>
+  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb, ExtArgs>
 
       /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -237,8 +237,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.14.0
-   * Query Engine version: e9771e62de70f79a5e1c604a2d7c8e2a0a874b48
+   * Prisma Client JS version: 5.17.0
+   * Query Engine version: 393aa359c9ad4a4bb28630fb5613f9c281cde053
    */
   export type PrismaVersion = {
     client: string
@@ -669,83 +669,82 @@ export namespace Prisma {
     db?: Datasource
   }
 
-
-  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs}, $Utils.Record<string, any>> {
-    returns: Prisma.TypeMap<this['params']['extArgs']>
+  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs, clientOptions: PrismaClientOptions }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs'], this['params']['clientOptions']>
   }
 
-  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: 'user' | 'broadcast' | 'circle'
+      modelProps: "user" | "broadcast" | "circle"
       txIsolationLevel: Prisma.TransactionIsolationLevel
-    },
+    }
     model: {
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.UserFindUniqueArgs<ExtArgs>,
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>,
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findFirst: {
-            args: Prisma.UserFindFirstArgs<ExtArgs>,
+            args: Prisma.UserFindFirstArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>,
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findMany: {
-            args: Prisma.UserFindManyArgs<ExtArgs>,
+            args: Prisma.UserFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           create: {
-            args: Prisma.UserCreateArgs<ExtArgs>,
+            args: Prisma.UserCreateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           createMany: {
-            args: Prisma.UserCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>,
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           delete: {
-            args: Prisma.UserDeleteArgs<ExtArgs>,
+            args: Prisma.UserDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           update: {
-            args: Prisma.UserUpdateArgs<ExtArgs>,
+            args: Prisma.UserUpdateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           deleteMany: {
-            args: Prisma.UserDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
           }
           updateMany: {
-            args: Prisma.UserUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
           }
           upsert: {
-            args: Prisma.UserUpsertArgs<ExtArgs>,
+            args: Prisma.UserUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           aggregate: {
-            args: Prisma.UserAggregateArgs<ExtArgs>,
+            args: Prisma.UserAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateUser>
           }
           groupBy: {
-            args: Prisma.UserGroupByArgs<ExtArgs>,
+            args: Prisma.UserGroupByArgs<ExtArgs>
             result: $Utils.Optional<UserGroupByOutputType>[]
           }
           count: {
-            args: Prisma.UserCountArgs<ExtArgs>,
+            args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
           }
         }
@@ -755,67 +754,67 @@ export namespace Prisma {
         fields: Prisma.BroadcastFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.BroadcastFindUniqueArgs<ExtArgs>,
+            args: Prisma.BroadcastFindUniqueArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.BroadcastFindUniqueOrThrowArgs<ExtArgs>,
+            args: Prisma.BroadcastFindUniqueOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>
           }
           findFirst: {
-            args: Prisma.BroadcastFindFirstArgs<ExtArgs>,
+            args: Prisma.BroadcastFindFirstArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.BroadcastFindFirstOrThrowArgs<ExtArgs>,
+            args: Prisma.BroadcastFindFirstOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>
           }
           findMany: {
-            args: Prisma.BroadcastFindManyArgs<ExtArgs>,
+            args: Prisma.BroadcastFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>[]
           }
           create: {
-            args: Prisma.BroadcastCreateArgs<ExtArgs>,
+            args: Prisma.BroadcastCreateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>
           }
           createMany: {
-            args: Prisma.BroadcastCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.BroadcastCreateManyArgs<ExtArgs>
+            result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.BroadcastCreateManyAndReturnArgs<ExtArgs>,
+            args: Prisma.BroadcastCreateManyAndReturnArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>[]
           }
           delete: {
-            args: Prisma.BroadcastDeleteArgs<ExtArgs>,
+            args: Prisma.BroadcastDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>
           }
           update: {
-            args: Prisma.BroadcastUpdateArgs<ExtArgs>,
+            args: Prisma.BroadcastUpdateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>
           }
           deleteMany: {
-            args: Prisma.BroadcastDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.BroadcastDeleteManyArgs<ExtArgs>
+            result: BatchPayload
           }
           updateMany: {
-            args: Prisma.BroadcastUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.BroadcastUpdateManyArgs<ExtArgs>
+            result: BatchPayload
           }
           upsert: {
-            args: Prisma.BroadcastUpsertArgs<ExtArgs>,
+            args: Prisma.BroadcastUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$BroadcastPayload>
           }
           aggregate: {
-            args: Prisma.BroadcastAggregateArgs<ExtArgs>,
+            args: Prisma.BroadcastAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateBroadcast>
           }
           groupBy: {
-            args: Prisma.BroadcastGroupByArgs<ExtArgs>,
+            args: Prisma.BroadcastGroupByArgs<ExtArgs>
             result: $Utils.Optional<BroadcastGroupByOutputType>[]
           }
           count: {
-            args: Prisma.BroadcastCountArgs<ExtArgs>,
+            args: Prisma.BroadcastCountArgs<ExtArgs>
             result: $Utils.Optional<BroadcastCountAggregateOutputType> | number
           }
         }
@@ -825,67 +824,67 @@ export namespace Prisma {
         fields: Prisma.CircleFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.CircleFindUniqueArgs<ExtArgs>,
+            args: Prisma.CircleFindUniqueArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.CircleFindUniqueOrThrowArgs<ExtArgs>,
+            args: Prisma.CircleFindUniqueOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>
           }
           findFirst: {
-            args: Prisma.CircleFindFirstArgs<ExtArgs>,
+            args: Prisma.CircleFindFirstArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.CircleFindFirstOrThrowArgs<ExtArgs>,
+            args: Prisma.CircleFindFirstOrThrowArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>
           }
           findMany: {
-            args: Prisma.CircleFindManyArgs<ExtArgs>,
+            args: Prisma.CircleFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>[]
           }
           create: {
-            args: Prisma.CircleCreateArgs<ExtArgs>,
+            args: Prisma.CircleCreateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>
           }
           createMany: {
-            args: Prisma.CircleCreateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.CircleCreateManyArgs<ExtArgs>
+            result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.CircleCreateManyAndReturnArgs<ExtArgs>,
+            args: Prisma.CircleCreateManyAndReturnArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>[]
           }
           delete: {
-            args: Prisma.CircleDeleteArgs<ExtArgs>,
+            args: Prisma.CircleDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>
           }
           update: {
-            args: Prisma.CircleUpdateArgs<ExtArgs>,
+            args: Prisma.CircleUpdateArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>
           }
           deleteMany: {
-            args: Prisma.CircleDeleteManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.CircleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
           }
           updateMany: {
-            args: Prisma.CircleUpdateManyArgs<ExtArgs>,
-            result: Prisma.BatchPayload
+            args: Prisma.CircleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
           }
           upsert: {
-            args: Prisma.CircleUpsertArgs<ExtArgs>,
+            args: Prisma.CircleUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$CirclePayload>
           }
           aggregate: {
-            args: Prisma.CircleAggregateArgs<ExtArgs>,
+            args: Prisma.CircleAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateCircle>
           }
           groupBy: {
-            args: Prisma.CircleGroupByArgs<ExtArgs>,
+            args: Prisma.CircleGroupByArgs<ExtArgs>
             result: $Utils.Optional<CircleGroupByOutputType>[]
           }
           count: {
-            args: Prisma.CircleCountArgs<ExtArgs>,
+            args: Prisma.CircleCountArgs<ExtArgs>
             result: $Utils.Optional<CircleCountAggregateOutputType> | number
           }
         }
@@ -914,7 +913,7 @@ export namespace Prisma {
       }
     }
   }
-  export const defineExtension: $Extensions.ExtendsHook<'define', Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
   export type DefaultPrismaClient = PrismaClient
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
@@ -958,6 +957,7 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
   }
+
 
   /* Types for Logging */
   export type LogLevel = 'info' | 'query' | 'warn' | 'error'
@@ -1063,7 +1063,9 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     user_id: string | null
     phone_number: string | null
-    name: string | null
+    user_name: string | null
+    first_name: string | null
+    last_name: string | null
     country_code: string | null
     created_at: Date | null
   }
@@ -1071,7 +1073,9 @@ export namespace Prisma {
   export type UserMaxAggregateOutputType = {
     user_id: string | null
     phone_number: string | null
-    name: string | null
+    user_name: string | null
+    first_name: string | null
+    last_name: string | null
     country_code: string | null
     created_at: Date | null
   }
@@ -1079,7 +1083,9 @@ export namespace Prisma {
   export type UserCountAggregateOutputType = {
     user_id: number
     phone_number: number
-    name: number
+    user_name: number
+    first_name: number
+    last_name: number
     country_code: number
     created_at: number
     _all: number
@@ -1089,7 +1095,9 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     user_id?: true
     phone_number?: true
-    name?: true
+    user_name?: true
+    first_name?: true
+    last_name?: true
     country_code?: true
     created_at?: true
   }
@@ -1097,7 +1105,9 @@ export namespace Prisma {
   export type UserMaxAggregateInputType = {
     user_id?: true
     phone_number?: true
-    name?: true
+    user_name?: true
+    first_name?: true
+    last_name?: true
     country_code?: true
     created_at?: true
   }
@@ -1105,7 +1115,9 @@ export namespace Prisma {
   export type UserCountAggregateInputType = {
     user_id?: true
     phone_number?: true
-    name?: true
+    user_name?: true
+    first_name?: true
+    last_name?: true
     country_code?: true
     created_at?: true
     _all?: true
@@ -1186,7 +1198,9 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     user_id: string
     phone_number: string
-    name: string | null
+    user_name: string | null
+    first_name: string | null
+    last_name: string | null
     country_code: string | null
     created_at: Date
     _count: UserCountAggregateOutputType | null
@@ -1211,7 +1225,19 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     user_id?: boolean
     phone_number?: boolean
-    name?: boolean
+    user_name?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    country_code?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    phone_number?: boolean
+    user_name?: boolean
+    first_name?: boolean
+    last_name?: boolean
     country_code?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1219,11 +1245,12 @@ export namespace Prisma {
   export type UserSelectScalar = {
     user_id?: boolean
     phone_number?: boolean
-    name?: boolean
+    user_name?: boolean
+    first_name?: boolean
+    last_name?: boolean
     country_code?: boolean
     created_at?: boolean
   }
-
 
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1232,13 +1259,14 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       user_id: string
       phone_number: string
-      name: string | null
+      user_name: string | null
+      first_name: string | null
+      last_name: string | null
       country_code: string | null
       created_at: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
-
 
   type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
@@ -1259,10 +1287,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUnique<T extends UserFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
 
     /**
      * Find one User that matches the filter or throw an error with `error.code='P2025'` 
@@ -1275,10 +1301,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
 
     /**
      * Find the first User that matches the filter.
@@ -1292,10 +1316,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirst<T extends UserFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
 
     /**
      * Find the first User that matches the filter or
@@ -1310,10 +1332,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirstOrThrow<T extends UserFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
 
     /**
      * Find zero or more Users that matches the filter.
@@ -1330,10 +1350,8 @@ export namespace Prisma {
      * // Only select the `user_id`
      * const userWithUser_idOnly = await prisma.user.findMany({ select: { user_id: true } })
      * 
-    **/
-    findMany<T extends UserFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany'>>
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany">>
 
     /**
      * Create a User.
@@ -1346,10 +1364,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    create<T extends UserCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, UserCreateArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create">, never, ExtArgs>
 
     /**
      * Create many Users.
@@ -1362,10 +1378,8 @@ export namespace Prisma {
      *   ]
      * })
      *     
-    **/
-    createMany<T extends UserCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many Users and returns the data saved in the database.
@@ -1388,10 +1402,8 @@ export namespace Prisma {
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
      * 
-    **/
-    createManyAndReturn<T extends UserCreateManyAndReturnArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'createManyAndReturn'>>
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn">>
 
     /**
      * Delete a User.
@@ -1404,10 +1416,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    delete<T extends UserDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, UserDeleteArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete">, never, ExtArgs>
 
     /**
      * Update one User.
@@ -1423,10 +1433,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    update<T extends UserUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, UserUpdateArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update">, never, ExtArgs>
 
     /**
      * Delete zero or more Users.
@@ -1439,10 +1447,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    deleteMany<T extends UserDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Users.
@@ -1460,10 +1466,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    updateMany<T extends UserUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create or update one User.
@@ -1481,10 +1485,9 @@ export namespace Prisma {
      *     // ... the filter for the User we want to update
      *   }
      * })
-    **/
-    upsert<T extends UserUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, UserUpsertArgs<ExtArgs>>
-    ): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
 
     /**
      * Count the number of Users.
@@ -1624,30 +1627,29 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-
+    readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
+
 
 
 
@@ -1657,7 +1659,9 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly user_id: FieldRef<"User", 'String'>
     readonly phone_number: FieldRef<"User", 'String'>
-    readonly name: FieldRef<"User", 'String'>
+    readonly user_name: FieldRef<"User", 'String'>
+    readonly first_name: FieldRef<"User", 'String'>
+    readonly last_name: FieldRef<"User", 'String'>
     readonly country_code: FieldRef<"User", 'String'>
     readonly created_at: FieldRef<"User", 'DateTime'>
   }
@@ -1851,7 +1855,7 @@ export namespace Prisma {
     /**
      * Select specific fields to fetch from the User
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
     /**
      * The data used to create many Users.
      */
@@ -1954,14 +1958,29 @@ export namespace Prisma {
 
   export type AggregateBroadcast = {
     _count: BroadcastCountAggregateOutputType | null
+    _avg: BroadcastAvgAggregateOutputType | null
+    _sum: BroadcastSumAggregateOutputType | null
     _min: BroadcastMinAggregateOutputType | null
     _max: BroadcastMaxAggregateOutputType | null
+  }
+
+  export type BroadcastAvgAggregateOutputType = {
+    d_count: number | null
+    viewed_count: number | null
+  }
+
+  export type BroadcastSumAggregateOutputType = {
+    d_count: number | null
+    viewed_count: number | null
   }
 
   export type BroadcastMinAggregateOutputType = {
     broadcast_id: string | null
     sender_id: string | null
     text: string | null
+    tag: string | null
+    d_count: number | null
+    viewed_count: number | null
     created_at: Date | null
   }
 
@@ -1969,6 +1988,9 @@ export namespace Prisma {
     broadcast_id: string | null
     sender_id: string | null
     text: string | null
+    tag: string | null
+    d_count: number | null
+    viewed_count: number | null
     created_at: Date | null
   }
 
@@ -1976,15 +1998,31 @@ export namespace Prisma {
     broadcast_id: number
     sender_id: number
     text: number
+    tag: number
+    d_count: number
+    viewed_count: number
     created_at: number
     _all: number
   }
 
 
+  export type BroadcastAvgAggregateInputType = {
+    d_count?: true
+    viewed_count?: true
+  }
+
+  export type BroadcastSumAggregateInputType = {
+    d_count?: true
+    viewed_count?: true
+  }
+
   export type BroadcastMinAggregateInputType = {
     broadcast_id?: true
     sender_id?: true
     text?: true
+    tag?: true
+    d_count?: true
+    viewed_count?: true
     created_at?: true
   }
 
@@ -1992,6 +2030,9 @@ export namespace Prisma {
     broadcast_id?: true
     sender_id?: true
     text?: true
+    tag?: true
+    d_count?: true
+    viewed_count?: true
     created_at?: true
   }
 
@@ -1999,6 +2040,9 @@ export namespace Prisma {
     broadcast_id?: true
     sender_id?: true
     text?: true
+    tag?: true
+    d_count?: true
+    viewed_count?: true
     created_at?: true
     _all?: true
   }
@@ -2041,6 +2085,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: BroadcastAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BroadcastSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: BroadcastMinAggregateInputType
@@ -2071,6 +2127,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: BroadcastCountAggregateInputType | true
+    _avg?: BroadcastAvgAggregateInputType
+    _sum?: BroadcastSumAggregateInputType
     _min?: BroadcastMinAggregateInputType
     _max?: BroadcastMaxAggregateInputType
   }
@@ -2079,8 +2137,13 @@ export namespace Prisma {
     broadcast_id: string
     sender_id: string
     text: string
+    tag: string
+    d_count: number
+    viewed_count: number
     created_at: Date
     _count: BroadcastCountAggregateOutputType | null
+    _avg: BroadcastAvgAggregateOutputType | null
+    _sum: BroadcastSumAggregateOutputType | null
     _min: BroadcastMinAggregateOutputType | null
     _max: BroadcastMaxAggregateOutputType | null
   }
@@ -2103,6 +2166,19 @@ export namespace Prisma {
     broadcast_id?: boolean
     sender_id?: boolean
     text?: boolean
+    tag?: boolean
+    d_count?: boolean
+    viewed_count?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["broadcast"]>
+
+  export type BroadcastSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    broadcast_id?: boolean
+    sender_id?: boolean
+    text?: boolean
+    tag?: boolean
+    d_count?: boolean
+    viewed_count?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["broadcast"]>
 
@@ -2110,9 +2186,11 @@ export namespace Prisma {
     broadcast_id?: boolean
     sender_id?: boolean
     text?: boolean
+    tag?: boolean
+    d_count?: boolean
+    viewed_count?: boolean
     created_at?: boolean
   }
-
 
 
   export type $BroadcastPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2122,11 +2200,13 @@ export namespace Prisma {
       broadcast_id: string
       sender_id: string
       text: string
+      tag: string
+      d_count: number
+      viewed_count: number
       created_at: Date
     }, ExtArgs["result"]["broadcast"]>
     composites: {}
   }
-
 
   type BroadcastGetPayload<S extends boolean | null | undefined | BroadcastDefaultArgs> = $Result.GetResult<Prisma.$BroadcastPayload, S>
 
@@ -2147,10 +2227,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUnique<T extends BroadcastFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, BroadcastFindUniqueArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+     */
+    findUnique<T extends BroadcastFindUniqueArgs>(args: SelectSubset<T, BroadcastFindUniqueArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
 
     /**
      * Find one Broadcast that matches the filter or throw an error with `error.code='P2025'` 
@@ -2163,10 +2241,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUniqueOrThrow<T extends BroadcastFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, BroadcastFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+     */
+    findUniqueOrThrow<T extends BroadcastFindUniqueOrThrowArgs>(args: SelectSubset<T, BroadcastFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
 
     /**
      * Find the first Broadcast that matches the filter.
@@ -2180,10 +2256,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirst<T extends BroadcastFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, BroadcastFindFirstArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+     */
+    findFirst<T extends BroadcastFindFirstArgs>(args?: SelectSubset<T, BroadcastFindFirstArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
 
     /**
      * Find the first Broadcast that matches the filter or
@@ -2198,10 +2272,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirstOrThrow<T extends BroadcastFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, BroadcastFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+     */
+    findFirstOrThrow<T extends BroadcastFindFirstOrThrowArgs>(args?: SelectSubset<T, BroadcastFindFirstOrThrowArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
 
     /**
      * Find zero or more Broadcasts that matches the filter.
@@ -2218,10 +2290,8 @@ export namespace Prisma {
      * // Only select the `broadcast_id`
      * const broadcastWithBroadcast_idOnly = await prisma.broadcast.findMany({ select: { broadcast_id: true } })
      * 
-    **/
-    findMany<T extends BroadcastFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, BroadcastFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'findMany'>>
+     */
+    findMany<T extends BroadcastFindManyArgs>(args?: SelectSubset<T, BroadcastFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "findMany">>
 
     /**
      * Create a Broadcast.
@@ -2234,10 +2304,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    create<T extends BroadcastCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, BroadcastCreateArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+     */
+    create<T extends BroadcastCreateArgs>(args: SelectSubset<T, BroadcastCreateArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "create">, never, ExtArgs>
 
     /**
      * Create many Broadcasts.
@@ -2250,10 +2318,8 @@ export namespace Prisma {
      *   ]
      * })
      *     
-    **/
-    createMany<T extends BroadcastCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, BroadcastCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    createMany<T extends BroadcastCreateManyArgs>(args?: SelectSubset<T, BroadcastCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many Broadcasts and returns the data saved in the database.
@@ -2276,10 +2342,8 @@ export namespace Prisma {
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
      * 
-    **/
-    createManyAndReturn<T extends BroadcastCreateManyAndReturnArgs<ExtArgs>>(
-      args?: SelectSubset<T, BroadcastCreateManyAndReturnArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'createManyAndReturn'>>
+     */
+    createManyAndReturn<T extends BroadcastCreateManyAndReturnArgs>(args?: SelectSubset<T, BroadcastCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "createManyAndReturn">>
 
     /**
      * Delete a Broadcast.
@@ -2292,10 +2356,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    delete<T extends BroadcastDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, BroadcastDeleteArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+     */
+    delete<T extends BroadcastDeleteArgs>(args: SelectSubset<T, BroadcastDeleteArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "delete">, never, ExtArgs>
 
     /**
      * Update one Broadcast.
@@ -2311,10 +2373,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    update<T extends BroadcastUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, BroadcastUpdateArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+     */
+    update<T extends BroadcastUpdateArgs>(args: SelectSubset<T, BroadcastUpdateArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "update">, never, ExtArgs>
 
     /**
      * Delete zero or more Broadcasts.
@@ -2327,10 +2387,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    deleteMany<T extends BroadcastDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, BroadcastDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    deleteMany<T extends BroadcastDeleteManyArgs>(args?: SelectSubset<T, BroadcastDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Broadcasts.
@@ -2348,10 +2406,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    updateMany<T extends BroadcastUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, BroadcastUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    updateMany<T extends BroadcastUpdateManyArgs>(args: SelectSubset<T, BroadcastUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create or update one Broadcast.
@@ -2369,10 +2425,9 @@ export namespace Prisma {
      *     // ... the filter for the Broadcast we want to update
      *   }
      * })
-    **/
-    upsert<T extends BroadcastUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, BroadcastUpsertArgs<ExtArgs>>
-    ): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+     */
+    upsert<T extends BroadcastUpsertArgs>(args: SelectSubset<T, BroadcastUpsertArgs<ExtArgs>>): Prisma__BroadcastClient<$Result.GetResult<Prisma.$BroadcastPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
 
     /**
      * Count the number of Broadcasts.
@@ -2512,30 +2567,29 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__BroadcastClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-
+    readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
+
 
 
 
@@ -2546,6 +2600,9 @@ export namespace Prisma {
     readonly broadcast_id: FieldRef<"Broadcast", 'String'>
     readonly sender_id: FieldRef<"Broadcast", 'String'>
     readonly text: FieldRef<"Broadcast", 'String'>
+    readonly tag: FieldRef<"Broadcast", 'String'>
+    readonly d_count: FieldRef<"Broadcast", 'Int'>
+    readonly viewed_count: FieldRef<"Broadcast", 'Int'>
     readonly created_at: FieldRef<"Broadcast", 'DateTime'>
   }
     
@@ -2738,7 +2795,7 @@ export namespace Prisma {
     /**
      * Select specific fields to fetch from the Broadcast
      */
-    select?: BroadcastSelect<ExtArgs> | null
+    select?: BroadcastSelectCreateManyAndReturn<ExtArgs> | null
     /**
      * The data used to create many Broadcasts.
      */
@@ -3001,6 +3058,14 @@ export namespace Prisma {
     created_at?: boolean
   }, ExtArgs["result"]["circle"]>
 
+  export type CircleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    circle_id?: boolean
+    broadcast_id?: boolean
+    receiver_id?: boolean
+    is_expired?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["circle"]>
+
   export type CircleSelectScalar = {
     circle_id?: boolean
     broadcast_id?: boolean
@@ -3008,7 +3073,6 @@ export namespace Prisma {
     is_expired?: boolean
     created_at?: boolean
   }
-
 
 
   export type $CirclePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3023,7 +3087,6 @@ export namespace Prisma {
     }, ExtArgs["result"]["circle"]>
     composites: {}
   }
-
 
   type CircleGetPayload<S extends boolean | null | undefined | CircleDefaultArgs> = $Result.GetResult<Prisma.$CirclePayload, S>
 
@@ -3044,10 +3107,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUnique<T extends CircleFindUniqueArgs<ExtArgs>>(
-      args: SelectSubset<T, CircleFindUniqueArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+     */
+    findUnique<T extends CircleFindUniqueArgs>(args: SelectSubset<T, CircleFindUniqueArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
 
     /**
      * Find one Circle that matches the filter or throw an error with `error.code='P2025'` 
@@ -3060,10 +3121,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findUniqueOrThrow<T extends CircleFindUniqueOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, CircleFindUniqueOrThrowArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+     */
+    findUniqueOrThrow<T extends CircleFindUniqueOrThrowArgs>(args: SelectSubset<T, CircleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
 
     /**
      * Find the first Circle that matches the filter.
@@ -3077,10 +3136,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirst<T extends CircleFindFirstArgs<ExtArgs>>(
-      args?: SelectSubset<T, CircleFindFirstArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+     */
+    findFirst<T extends CircleFindFirstArgs>(args?: SelectSubset<T, CircleFindFirstArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
 
     /**
      * Find the first Circle that matches the filter or
@@ -3095,10 +3152,8 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-    **/
-    findFirstOrThrow<T extends CircleFindFirstOrThrowArgs<ExtArgs>>(
-      args?: SelectSubset<T, CircleFindFirstOrThrowArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+     */
+    findFirstOrThrow<T extends CircleFindFirstOrThrowArgs>(args?: SelectSubset<T, CircleFindFirstOrThrowArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
 
     /**
      * Find zero or more Circles that matches the filter.
@@ -3115,10 +3170,8 @@ export namespace Prisma {
      * // Only select the `circle_id`
      * const circleWithCircle_idOnly = await prisma.circle.findMany({ select: { circle_id: true } })
      * 
-    **/
-    findMany<T extends CircleFindManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, CircleFindManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'findMany'>>
+     */
+    findMany<T extends CircleFindManyArgs>(args?: SelectSubset<T, CircleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "findMany">>
 
     /**
      * Create a Circle.
@@ -3131,10 +3184,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    create<T extends CircleCreateArgs<ExtArgs>>(
-      args: SelectSubset<T, CircleCreateArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+     */
+    create<T extends CircleCreateArgs>(args: SelectSubset<T, CircleCreateArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "create">, never, ExtArgs>
 
     /**
      * Create many Circles.
@@ -3147,10 +3198,8 @@ export namespace Prisma {
      *   ]
      * })
      *     
-    **/
-    createMany<T extends CircleCreateManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, CircleCreateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    createMany<T extends CircleCreateManyArgs>(args?: SelectSubset<T, CircleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many Circles and returns the data saved in the database.
@@ -3173,10 +3222,8 @@ export namespace Prisma {
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
      * 
-    **/
-    createManyAndReturn<T extends CircleCreateManyAndReturnArgs<ExtArgs>>(
-      args?: SelectSubset<T, CircleCreateManyAndReturnArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'createManyAndReturn'>>
+     */
+    createManyAndReturn<T extends CircleCreateManyAndReturnArgs>(args?: SelectSubset<T, CircleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "createManyAndReturn">>
 
     /**
      * Delete a Circle.
@@ -3189,10 +3236,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    delete<T extends CircleDeleteArgs<ExtArgs>>(
-      args: SelectSubset<T, CircleDeleteArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+     */
+    delete<T extends CircleDeleteArgs>(args: SelectSubset<T, CircleDeleteArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "delete">, never, ExtArgs>
 
     /**
      * Update one Circle.
@@ -3208,10 +3253,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    update<T extends CircleUpdateArgs<ExtArgs>>(
-      args: SelectSubset<T, CircleUpdateArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+     */
+    update<T extends CircleUpdateArgs>(args: SelectSubset<T, CircleUpdateArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "update">, never, ExtArgs>
 
     /**
      * Delete zero or more Circles.
@@ -3224,10 +3267,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    deleteMany<T extends CircleDeleteManyArgs<ExtArgs>>(
-      args?: SelectSubset<T, CircleDeleteManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    deleteMany<T extends CircleDeleteManyArgs>(args?: SelectSubset<T, CircleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Circles.
@@ -3245,10 +3286,8 @@ export namespace Prisma {
      *   }
      * })
      * 
-    **/
-    updateMany<T extends CircleUpdateManyArgs<ExtArgs>>(
-      args: SelectSubset<T, CircleUpdateManyArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<BatchPayload>
+     */
+    updateMany<T extends CircleUpdateManyArgs>(args: SelectSubset<T, CircleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create or update one Circle.
@@ -3266,10 +3305,9 @@ export namespace Prisma {
      *     // ... the filter for the Circle we want to update
      *   }
      * })
-    **/
-    upsert<T extends CircleUpsertArgs<ExtArgs>>(
-      args: SelectSubset<T, CircleUpsertArgs<ExtArgs>>
-    ): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+     */
+    upsert<T extends CircleUpsertArgs>(args: SelectSubset<T, CircleUpsertArgs<ExtArgs>>): Prisma__CircleClient<$Result.GetResult<Prisma.$CirclePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
 
     /**
      * Count the number of Circles.
@@ -3409,30 +3447,29 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__CircleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-
-
+    readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
+
 
 
 
@@ -3636,7 +3673,7 @@ export namespace Prisma {
     /**
      * Select specific fields to fetch from the Circle
      */
-    select?: CircleSelect<ExtArgs> | null
+    select?: CircleSelectCreateManyAndReturn<ExtArgs> | null
     /**
      * The data used to create many Circles.
      */
@@ -3750,7 +3787,9 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     user_id: 'user_id',
     phone_number: 'phone_number',
-    name: 'name',
+    user_name: 'user_name',
+    first_name: 'first_name',
+    last_name: 'last_name',
     country_code: 'country_code',
     created_at: 'created_at'
   };
@@ -3762,6 +3801,9 @@ export namespace Prisma {
     broadcast_id: 'broadcast_id',
     sender_id: 'sender_id',
     text: 'text',
+    tag: 'tag',
+    d_count: 'd_count',
+    viewed_count: 'viewed_count',
     created_at: 'created_at'
   };
 
@@ -3837,13 +3879,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -3854,6 +3889,27 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -3866,7 +3922,9 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     user_id?: StringFilter<"User"> | string
     phone_number?: StringFilter<"User"> | string
-    name?: StringNullableFilter<"User"> | string | null
+    user_name?: StringNullableFilter<"User"> | string | null
+    first_name?: StringNullableFilter<"User"> | string | null
+    last_name?: StringNullableFilter<"User"> | string | null
     country_code?: StringNullableFilter<"User"> | string | null
     created_at?: DateTimeFilter<"User"> | Date | string
   }
@@ -3874,7 +3932,9 @@ export namespace Prisma {
   export type UserOrderByWithRelationInput = {
     user_id?: SortOrder
     phone_number?: SortOrder
-    name?: SortOrderInput | SortOrder
+    user_name?: SortOrderInput | SortOrder
+    first_name?: SortOrderInput | SortOrder
+    last_name?: SortOrderInput | SortOrder
     country_code?: SortOrderInput | SortOrder
     created_at?: SortOrder
   }
@@ -3885,7 +3945,9 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringNullableFilter<"User"> | string | null
+    user_name?: StringNullableFilter<"User"> | string | null
+    first_name?: StringNullableFilter<"User"> | string | null
+    last_name?: StringNullableFilter<"User"> | string | null
     country_code?: StringNullableFilter<"User"> | string | null
     created_at?: DateTimeFilter<"User"> | Date | string
   }, "user_id" | "user_id" | "phone_number">
@@ -3893,7 +3955,9 @@ export namespace Prisma {
   export type UserOrderByWithAggregationInput = {
     user_id?: SortOrder
     phone_number?: SortOrder
-    name?: SortOrderInput | SortOrder
+    user_name?: SortOrderInput | SortOrder
+    first_name?: SortOrderInput | SortOrder
+    last_name?: SortOrderInput | SortOrder
     country_code?: SortOrderInput | SortOrder
     created_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -3907,7 +3971,9 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     user_id?: StringWithAggregatesFilter<"User"> | string
     phone_number?: StringWithAggregatesFilter<"User"> | string
-    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    user_name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    first_name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    last_name?: StringNullableWithAggregatesFilter<"User"> | string | null
     country_code?: StringNullableWithAggregatesFilter<"User"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -3919,6 +3985,9 @@ export namespace Prisma {
     broadcast_id?: StringFilter<"Broadcast"> | string
     sender_id?: StringFilter<"Broadcast"> | string
     text?: StringFilter<"Broadcast"> | string
+    tag?: StringFilter<"Broadcast"> | string
+    d_count?: IntFilter<"Broadcast"> | number
+    viewed_count?: IntFilter<"Broadcast"> | number
     created_at?: DateTimeFilter<"Broadcast"> | Date | string
   }
 
@@ -3926,6 +3995,9 @@ export namespace Prisma {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
     text?: SortOrder
+    tag?: SortOrder
+    d_count?: SortOrder
+    viewed_count?: SortOrder
     created_at?: SortOrder
   }
 
@@ -3936,6 +4008,9 @@ export namespace Prisma {
     NOT?: BroadcastWhereInput | BroadcastWhereInput[]
     sender_id?: StringFilter<"Broadcast"> | string
     text?: StringFilter<"Broadcast"> | string
+    tag?: StringFilter<"Broadcast"> | string
+    d_count?: IntFilter<"Broadcast"> | number
+    viewed_count?: IntFilter<"Broadcast"> | number
     created_at?: DateTimeFilter<"Broadcast"> | Date | string
   }, "broadcast_id" | "broadcast_id">
 
@@ -3943,10 +4018,15 @@ export namespace Prisma {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
     text?: SortOrder
+    tag?: SortOrder
+    d_count?: SortOrder
+    viewed_count?: SortOrder
     created_at?: SortOrder
     _count?: BroadcastCountOrderByAggregateInput
+    _avg?: BroadcastAvgOrderByAggregateInput
     _max?: BroadcastMaxOrderByAggregateInput
     _min?: BroadcastMinOrderByAggregateInput
+    _sum?: BroadcastSumOrderByAggregateInput
   }
 
   export type BroadcastScalarWhereWithAggregatesInput = {
@@ -3956,6 +4036,9 @@ export namespace Prisma {
     broadcast_id?: StringWithAggregatesFilter<"Broadcast"> | string
     sender_id?: StringWithAggregatesFilter<"Broadcast"> | string
     text?: StringWithAggregatesFilter<"Broadcast"> | string
+    tag?: StringWithAggregatesFilter<"Broadcast"> | string
+    d_count?: IntWithAggregatesFilter<"Broadcast"> | number
+    viewed_count?: IntWithAggregatesFilter<"Broadcast"> | number
     created_at?: DateTimeWithAggregatesFilter<"Broadcast"> | Date | string
   }
 
@@ -4014,7 +4097,9 @@ export namespace Prisma {
   export type UserCreateInput = {
     user_id: string
     phone_number: string
-    name?: string | null
+    user_name?: string | null
+    first_name?: string | null
+    last_name?: string | null
     country_code?: string | null
     created_at?: Date | string
   }
@@ -4022,7 +4107,9 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     user_id: string
     phone_number: string
-    name?: string | null
+    user_name?: string | null
+    first_name?: string | null
+    last_name?: string | null
     country_code?: string | null
     created_at?: Date | string
   }
@@ -4030,7 +4117,9 @@ export namespace Prisma {
   export type UserUpdateInput = {
     user_id?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
     country_code?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4038,7 +4127,9 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     user_id?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
     country_code?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4046,7 +4137,9 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     user_id: string
     phone_number: string
-    name?: string | null
+    user_name?: string | null
+    first_name?: string | null
+    last_name?: string | null
     country_code?: string | null
     created_at?: Date | string
   }
@@ -4054,7 +4147,9 @@ export namespace Prisma {
   export type UserUpdateManyMutationInput = {
     user_id?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
     country_code?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4062,7 +4157,9 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     user_id?: StringFieldUpdateOperationsInput | string
     phone_number?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
     country_code?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4071,6 +4168,9 @@ export namespace Prisma {
     broadcast_id: string
     sender_id: string
     text: string
+    tag: string
+    d_count: number
+    viewed_count: number
     created_at?: Date | string
   }
 
@@ -4078,6 +4178,9 @@ export namespace Prisma {
     broadcast_id: string
     sender_id: string
     text: string
+    tag: string
+    d_count: number
+    viewed_count: number
     created_at?: Date | string
   }
 
@@ -4085,6 +4188,9 @@ export namespace Prisma {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
     text?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    d_count?: IntFieldUpdateOperationsInput | number
+    viewed_count?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4092,6 +4198,9 @@ export namespace Prisma {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
     text?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    d_count?: IntFieldUpdateOperationsInput | number
+    viewed_count?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4099,6 +4208,9 @@ export namespace Prisma {
     broadcast_id: string
     sender_id: string
     text: string
+    tag: string
+    d_count: number
+    viewed_count: number
     created_at?: Date | string
   }
 
@@ -4106,6 +4218,9 @@ export namespace Prisma {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
     text?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    d_count?: IntFieldUpdateOperationsInput | number
+    viewed_count?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4113,6 +4228,9 @@ export namespace Prisma {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
     text?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    d_count?: IntFieldUpdateOperationsInput | number
+    viewed_count?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4221,7 +4339,9 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     user_id?: SortOrder
     phone_number?: SortOrder
-    name?: SortOrder
+    user_name?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     country_code?: SortOrder
     created_at?: SortOrder
   }
@@ -4229,7 +4349,9 @@ export namespace Prisma {
   export type UserMaxOrderByAggregateInput = {
     user_id?: SortOrder
     phone_number?: SortOrder
-    name?: SortOrder
+    user_name?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     country_code?: SortOrder
     created_at?: SortOrder
   }
@@ -4237,7 +4359,9 @@ export namespace Prisma {
   export type UserMinOrderByAggregateInput = {
     user_id?: SortOrder
     phone_number?: SortOrder
-    name?: SortOrder
+    user_name?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     country_code?: SortOrder
     created_at?: SortOrder
   }
@@ -4292,17 +4416,39 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type BroadcastCountOrderByAggregateInput = {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
     text?: SortOrder
+    tag?: SortOrder
+    d_count?: SortOrder
+    viewed_count?: SortOrder
     created_at?: SortOrder
+  }
+
+  export type BroadcastAvgOrderByAggregateInput = {
+    d_count?: SortOrder
+    viewed_count?: SortOrder
   }
 
   export type BroadcastMaxOrderByAggregateInput = {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
     text?: SortOrder
+    tag?: SortOrder
+    d_count?: SortOrder
+    viewed_count?: SortOrder
     created_at?: SortOrder
   }
 
@@ -4310,7 +4456,31 @@ export namespace Prisma {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
     text?: SortOrder
+    tag?: SortOrder
+    d_count?: SortOrder
+    viewed_count?: SortOrder
     created_at?: SortOrder
+  }
+
+  export type BroadcastSumOrderByAggregateInput = {
+    d_count?: SortOrder
+    viewed_count?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -4360,6 +4530,14 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -4473,6 +4651,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
