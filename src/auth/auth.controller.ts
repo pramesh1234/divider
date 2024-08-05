@@ -72,7 +72,7 @@ export class AuthController {
         countryC,
       );
       console.log(`create user ${createUser}`)
-      const name = createUser.userName;
+      const userName = createUser.userName;
       const countryCode = createUser.countryCode;
       const phoneNumber = createUser.phoneNumber;
       const isNewUser = true;
@@ -80,7 +80,7 @@ export class AuthController {
       return {
         message: "User Created Successfully",
         data: {
-          name,
+          userName,
           countryCode,
           phoneNumber,
           isNewUser,

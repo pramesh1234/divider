@@ -7,6 +7,8 @@ type MyPoint = {
      userId:string
      phoneNumber: string
      countryCode : string
-     name: string
+     userName: string
+     firstName: string
+     lastName: string
      location: MyPoint
   }

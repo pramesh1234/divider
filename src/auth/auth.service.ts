@@ -61,7 +61,9 @@ export class AuthService {
       model: {
         user: {
           async create(data:{
-            name: string
+            userName: string
+            firstName: string
+            lastName: string
             phoneNumber: string
             countryCode: string
             userId: string
@@ -69,7 +71,9 @@ export class AuthService {
             longitude: number
           }){
     const poi: MyPointOfInterest = {
-      name: data.name,
+      userName: data.userName,
+      firstName: data.firstName,
+      lastName: data.lastName,
       phoneNumber:  data.phoneNumber,
       countryCode:  data.countryCode,
       userId: data.userId,
@@ -82,7 +86,7 @@ export class AuthService {
     const location = `POINT(${poi.location.longitude} ${poi.location.latitude})`
     // ST_GeomFromText(${point}, 4326)
     const pointString = `SRID=4326;POINT(${poi.location.longitude} ${poi.location.latitude})`;
-   const datra = await prisma.$queryRaw`INSERT INTO "User" ( user_id, phone_number, name, country_code, location,created_at) VALUES (${poi.userId}, ${poi.phoneNumber}, ${poi.name}, ${poi.countryCode},  ST_GeogFromText(${pointString}),Now())  RETURNING user_id, phone_number, name, country_code;` ;
+   const datra = await prisma.$queryRaw`INSERT INTO "User" ( user_id, phone_number, user_name,first_name,last_name, country_code, location,created_at) VALUES (${poi.userId}, ${poi.phoneNumber}, ${poi.userName},${poi.firstName},${poi.lastName}, ${poi.countryCode},  ST_GeogFromText(${pointString}),Now())  RETURNING user_id, phone_number, user_name, country_code;` ;
   }}}})
   const payload = {
     userId: userId,
@@ -93,7 +97,9 @@ export class AuthService {
 
   const accessToken = await this.jwtService.signAsync(payload);
   const data ={
-  name: "",
+  userName: "",
+  firstName: "",
+  lastName: "",
   phoneNumber,
   countryCode,
   userId,
@@ -106,7 +112,7 @@ await prisma.user.create(data);
 
   }
   async doesPhoneNumberExist(phoneNumber: string): Promise<AuthModel> {
-    const user = await this.prismaService.$queryRaw`SELECT user_id,name,phone_number,country_code FROM "User" Where "phone_number" = ${phoneNumber}`;
+    const user = await this.prismaService.$queryRaw`SELECT user_id,user_name,phone_number,country_code FROM "User" Where "phone_number" = ${phoneNumber}`;
 
     if (user[0] != null) {
       const payload = {
@@ -118,7 +124,7 @@ await prisma.user.create(data);
      const accessToken = await this.jwtService.signAsync(payload);
       const userResponse: AuthModel = {
         userId: user[0].user_id,
-        userName: user[0].name,
+        userName: user[0].user_name,
         phoneNumber: user[0].phone_number,
         isNewUser: false,
         accessToken: accessToken,
