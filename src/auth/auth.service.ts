@@ -148,7 +148,7 @@ await prisma.user.create(data);
     const pointString = `SRID=4326;POINT(${longitude?? 0.0} ${latitude?? 0.0})`;
     let user;
 
-    if (uName === null) {
+    if (uName !== null) {
       user = await this.prismaService.$executeRaw`
         UPDATE "User"
         SET "user_name" = ${uName}

@@ -8,4 +8,8 @@ export class BroadCastDto{
      @IsNumber()
      @IsNotEmpty()
      distance : number;
+
+     @IsString()
+     @IsNotEmpty()
+     tag : string;
 }

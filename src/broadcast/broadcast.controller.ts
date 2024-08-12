@@ -16,8 +16,9 @@ export class BroadcastController {
     const text = body.broadcast
     const distance = body.distance
     const senderUid = req?.user.userId
+    const tag = body.tag
 
-    const broadcastedData = await this.broadcastService.sendBroadcast(senderUid,text,distance)
+    const broadcastedData = await this.broadcastService.sendBroadcast(senderUid,text,distance,tag)
     if(broadcastedData!=null){
         return {
           data:broadcastedData,
