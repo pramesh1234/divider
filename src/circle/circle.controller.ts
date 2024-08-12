@@ -1,19 +1,18 @@
-import { Body, Controller, Get, Post,Request, UseGuards } from '@nestjs/common';
-import { CircleService } from './circle.service';
-import { BroadcastByIdDto } from './dto/broadcast.by.id.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { Controller, Get, UseGuards } from "@nestjs/common";
+import { CircleService } from "./circle.service";
+import { AuthGuard } from "src/auth/auth.guard";
+import { GetCurrentUser } from "src/common/decorators/user.decorator";
 
-@Controller('circle')
+@Controller("circle")
 export class CircleController {
-
-    constructor(private circleService : CircleService){}
-    @UseGuards(AuthGuard)
-    @Get('/getBroadcastByUserId')
-    async getBroadCastByUserId(@Request() req){
-        const data = await this.circleService.getBroadcastByUserId(req.userId)
-           return {
-            data:data,
-              message: "Data fetched successfully",
-            };
-    }
+  constructor(private circleService: CircleService) {}
+  @UseGuards(AuthGuard)
+  @Get("/getBroadcastByUserId")
+  async getBroadCastByUserId(@GetCurrentUser() user: any) {
+    const data = await this.circleService.getBroadcastByUserId(user.userId);
+    return {
+      data: data,
+      message: "Data fetched successfully",
+    };
+  }
 }

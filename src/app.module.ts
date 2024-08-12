@@ -8,8 +8,8 @@ import { PrismaService } from "./prisma.service";
 import { CacheModule } from "@nestjs/cache-manager";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./auth/constants";
-import { BroadcastModule } from './broadcast/broadcast.module';
-import { CircleModule } from './circle/circle.module';
+import { BroadcastModule } from "./broadcast/broadcast.module";
+import { CircleModule } from "./circle/circle.module";
 import { CircleController } from "./circle/circle.controller";
 import { CircleService } from "./circle/circle.service";
 
@@ -26,6 +26,6 @@ import { CircleService } from "./circle/circle.service";
     CircleModule,
   ],
   controllers: [AppController, AuthController, CircleController],
-  providers: [AppService, AuthService, PrismaService,CircleService],
+  providers: [AppService, AuthService, PrismaService, CircleService],
 })
 export class AppModule {}

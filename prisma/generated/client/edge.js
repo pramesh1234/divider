@@ -147,7 +147,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/hood/nestWorkSpace/dividerApp/divider/prisma/generated/client",
+      "value": "/Users/ishaansharma/Documents/Projects/divider/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -163,7 +163,7 @@ const config = {
     "previewFeatures": [
       "postgresqlExtensions"
     ],
-    "sourceFilePath": "/Users/hood/nestWorkSpace/dividerApp/divider/prisma/schema.prisma",
+    "sourceFilePath": "/Users/ishaansharma/Documents/Projects/divider/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
