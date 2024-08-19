@@ -6,7 +6,7 @@ import { uuid } from 'uuidv4';
 export class CircleService {
     constructor(private prismaService : PrismaService){}
 
-    async updateCircle(broadcastId:string,point:string,distance:number): Promise<any>{
+    async updateCircle(broadcastId:string,point:string,distance:number,senderUid:string): Promise<any>{
     
         const newdata : Array<any> = await this.prismaService.$queryRaw`
         SELECT user_id 
@@ -16,9 +16,12 @@ export class CircleService {
             ST_GeogFromText(${point})
         ) <= ${distance}
     `;
-        for (let i = 0; i < newdata.length; i++) {
+
+let filteredUsers = newdata.filter(user => user.user_id !== senderUid);
+     console.log(`data users ${JSON.stringify(filteredUsers)}`)
+        for (let i = 0; i < filteredUsers.length; i++) {
         const circleId = uuid()
-        const receiverId = newdata[i].user_id
+        const receiverId = filteredUsers[i].user_id
          await this.prismaService.$queryRaw`INSERT INTO "Circle" ("circle_id","broadcast_id","receiver_id", "created_at", "is_expired") VALUES ( ${circleId}, ${broadcastId},${receiverId},Now(),false)`;
     
     }

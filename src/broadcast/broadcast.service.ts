@@ -37,6 +37,8 @@ export class BroadcastService {
             const user: any =
               await prisma.$queryRaw`SELECT ST_AsText(location) as location FROM "User" Where "user_id" = ${senderUid}`;
 
+
+
             locationData = `SRID=4326;${user[0].location}`;
             await prisma.$queryRaw`INSERT INTO "Broadcast" ("broadcast_id","sender_id","d_count","viewed_count", "text","tag" ,"b_location","created_at") VALUES ( ${broadcastPoint.broadcastId}:: uuid,${broadcastPoint.senderUid},0,0, ${broadcastPoint.broadcast},${broadcastPoint.tag},ST_GeogFromText(${locationData}),Now())`;
           },
@@ -50,7 +52,7 @@ export class BroadcastService {
       tag
     };
     await prisma.user.create(data);
-    this.circleService.updateCircle(broadcastId, locationData, distance);
+    this.circleService.updateCircle(broadcastId, locationData, distance,senderUid);
     return data;
   }
 }
