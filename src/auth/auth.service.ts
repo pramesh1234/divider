@@ -149,14 +149,14 @@ await prisma.user.create(data);
     console.log(`update location query ${uName !== null}`)
     let user;
 
-    if (uName !== null && uName !== undefined) {
+    if (uName) {
       user = await this.prismaService.$executeRaw`
         UPDATE "User"
         SET "user_name" = ${uName}
         WHERE "phone_number" = ${phoneNumber}
         RETURNING *;
       `;
-    } else if (lastName !== null && firstName !== null && lastName !== undefined &&  firstName !== undefined) {
+    } else if (lastName && firstName) {
       user = await this.prismaService.$executeRaw`
         UPDATE "User"
         SET "first_name" = ${firstName},
@@ -164,7 +164,7 @@ await prisma.user.create(data);
         WHERE "phone_number" = ${phoneNumber}
         RETURNING *;
       `;
-    } else if (longitude !== null && latitude !== null&& longitude !== undefined &&  latitude !== undefined) {
+    } else if (longitude  && latitude ) {
       console.log(`update location query ${pointString}`)
       user = await this.prismaService.$executeRaw`
         UPDATE "User"
