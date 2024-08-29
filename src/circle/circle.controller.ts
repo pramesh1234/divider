@@ -10,7 +10,7 @@ export class CircleController {
     @UseGuards(AuthGuard)
     @Get('/getBroadcastByUserId')
     async getBroadCastByUserId(@Request() req){
-        const data = await this.circleService.getBroadcastByUserId(req.userId)
+        const data = await this.circleService.getBroadcastByUserId(req?.user.userId)
            return {
             data:data,
               message: "Data fetched successfully",
