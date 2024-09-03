@@ -29,7 +29,7 @@ let filteredUsers = newdata.filter(user => user.user_id !== senderUid);
 async getBroadcastByUserId(userId:string):Promise<any>{
     console.log(`data broadcast userId ${userId}}`)
     const rawData: Array<any> = await this.prismaService.$queryRaw`
-    SELECT b_location::text, "Broadcast".broadcast_id, receiver_id, text, sender_id,   b_location::text as b_location_string
+    SELECT ST_AsText(b_location) as b_location_string, "Broadcast".broadcast_id, receiver_id, text, sender_id
     FROM "Broadcast" 
     INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id" where receiver_id = ${userId}
 `;
