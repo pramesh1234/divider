@@ -102,7 +102,7 @@ export class AuthService {
   lastName: "",
   phoneNumber,
   countryCode,
-  userId,
+  userId: userId,
   latitude: 0.0,
   longitude: 0.0,
   accessToken:accessToken,
