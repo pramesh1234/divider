@@ -35,10 +35,12 @@ async getBroadcastByUserId(userId:string):Promise<any>{
 `;
 console.log(`data broadcast userId ${JSON.stringify(rawData)}}`)
 const processedData = rawData.map((data) => {
-    const [, longitude, latitude] = data.b_location_string
+    const coordinates = data.b_location_string
     .replace("POINT(", "")
     .replace(")", "")
     .split(" ");
+    console.log(`coordinaates : : $coordinates}`); 
+    const [longitude, latitude]  = coordinates
 
     return {
         broadcast_id: data.broadcast_id,
