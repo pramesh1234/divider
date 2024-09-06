@@ -45,8 +45,8 @@ const processedData = rawData.map((data) => {
         receiver_id: data.receiver_id,
         text: data.text,
         sender_id: data.sender_id,
-        longitude: longitude,
-        latitude: latitude
+        longitude: parseFloat(longitude),
+        latitude: parseFloat(latitude)
     };
 });
     return processedData
