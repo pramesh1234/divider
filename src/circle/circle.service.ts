@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { stringify } from 'querystring';
 import { PrismaService } from 'src/prisma.service';
 import { uuid } from 'uuidv4';
 
@@ -44,7 +45,7 @@ const processedData = rawData.map((data) => {
     .replace("POINT(", "")
     .replace(")", "")
     .split(" ");
-    console.log(`coordinaates : : ${coordinates}  ${dis}`); 
+    console.log(`coordinaates : : ${coordinates}  ${JSON.stringify(dis)}`); 
     const [longitude, latitude]  = coordinates
 
     return {
