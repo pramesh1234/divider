@@ -33,13 +33,18 @@ async getBroadcastByUserId(userId:string):Promise<any>{
     FROM "Broadcast" 
     INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id" where receiver_id = ${userId}
 `;
-console.log(`data broadcast userId ${JSON.stringify(rawData)}}`)
+const dis =  await this.prismaService.$queryRaw`SELECT
+    ST_Distance(
+        ST_GeogFromText('SRID=4326;POINT(77.1072422 28.4814984)'),
+        ST_GeogFromText('SRID=4326;POINT(77.391029 28.535517)')
+    ) AS distance_meters;`
+    console.log(`data broadcast userId ${JSON.stringify(rawData)}}`)
 const processedData = rawData.map((data) => {
     const coordinates = data.b_location_string
     .replace("POINT(", "")
     .replace(")", "")
     .split(" ");
-    console.log(`coordinaates : : $coordinates}`); 
+    console.log(`coordinaates : : ${coordinates}  ${dis}`); 
     const [longitude, latitude]  = coordinates
 
     return {
