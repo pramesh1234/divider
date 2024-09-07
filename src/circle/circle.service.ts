@@ -35,20 +35,18 @@ async getBroadcastByUserId(userId:string):Promise<any>{
     INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id" where receiver_id = ${userId}
 `;
 const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location) as location_string from  "User" Where "user_id" = ${userId}`
-const dis1 = 'SRID=4326;${b_location_string}'
-const dis =  await this.prismaService.$queryRaw`SELECT
-    ST_Distance(
-        ST_GeogFromText(dis1),
-        ST_GeogFromText('SRID=4326;POINT(77.391029 28.535517)')
-    ) AS distance_meters;`
+
     console.log(`data broadcast userId ${JSON.stringify(coorOfUser)}}`)
+    var coordinates : string
 const processedData = rawData.map((data) => {
-    const coordinates = data.b_location_string
+     coordinates = data.b_location_string
     .replace("POINT(", "")
     .replace(")", "")
     .split(" ");
     console.log(`coordinaates : : ${coordinates}  ${JSON.stringify(dis)}`); 
     const [longitude, latitude]  = coordinates
+
+
 
     return {
         broadcast_id: data.broadcast_id,
@@ -59,6 +57,11 @@ const processedData = rawData.map((data) => {
         latitude: parseFloat(latitude)
     };
 });
+const dis =  await this.prismaService.$queryRaw`SELECT
+ST_Distance(
+    ST_GeogFromText(${`SRID=4326;POINT(${coordinates})`}),
+    ST_GeogFromText('SRID=4326;POINT(77.391029 28.535517)')
+) AS distance_meters;`
     return processedData
 }
 }
