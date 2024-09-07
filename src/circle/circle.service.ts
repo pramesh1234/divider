@@ -48,8 +48,8 @@ const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location)
     
             const dis = await this.prismaService.$queryRaw`
                 SELECT ST_Distance(
-                    ST_GeogFromText(${`SRID=4326;POINT(${coordinates})`}),
-                    ST_GeogFromText(${`SRID=4326;${coorOfUser[0].location_string.replace(","," ")}`})
+                    ST_GeogFromText(${`SRID=4326;POINT(${coordinates.replace(","," ")})`}),
+                    ST_GeogFromText(${`SRID=4326;${coorOfUser[0].location_string}`})
                 ) AS distance_meters;
             `;
     
