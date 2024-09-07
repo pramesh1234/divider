@@ -34,7 +34,7 @@ async getBroadcastByUserId(userId:string):Promise<any>{
     FROM "Broadcast" 
     INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id" where receiver_id = ${userId}
 `;
-const coorOfUser = await this.prismaService.$queryRaw`SELECT location from  "User" Where "user_id" = ${userId}`
+const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location) as location_string from  "User" Where "user_id" = ${userId}`
 const dis1 = 'SRID=4326;${b_location_string}'
 const dis =  await this.prismaService.$queryRaw`SELECT
     ST_Distance(
