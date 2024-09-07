@@ -37,31 +37,36 @@ async getBroadcastByUserId(userId:string):Promise<any>{
 const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location) as location_string from  "User" Where "user_id" = ${userId}`
 
     console.log(`data broadcast userId ${JSON.stringify(coorOfUser)}}`)
-    var coordinates : string
-const processedData = rawData.map((data) => {
-     coordinates = data.b_location_string
-    .replace("POINT(", "")
-    .replace(")", "")
-    .split(" ");
-    console.log(`coordinaates : : ${coordinates}  ${JSON.stringify(dis)}`); 
-    const [longitude, latitude]  = coordinates
-
-
-
-    return {
-        broadcast_id: data.broadcast_id,
-        receiver_id: data.receiver_id,
-        text: data.text,
-        sender_id: data.sender_id,
-        longitude: parseFloat(longitude),
-        latitude: parseFloat(latitude)
-    };
-});
-const dis =  await this.prismaService.$queryRaw`SELECT
-ST_Distance(
-    ST_GeogFromText(${`SRID=4326;POINT(${coordinates})`}),
-    ST_GeogFromText('SRID=4326;POINT(77.391029 28.535517)')
-) AS distance_meters;`
+  
+    const processedData = await Promise.all(
+        rawData.map(async (data) => {
+            const coordinates = data.b_location_string
+                .replace("POINT(", "")
+                .replace(")", "")
+                .split(" ");
+            const [longitude, latitude] = coordinates;
+    
+            const dis = await this.prismaService.$queryRaw`
+                SELECT ST_Distance(
+                    ST_GeogFromText(${`SRID=4326;POINT(${coordinates})`}),
+                    ST_GeogFromText(${`SRID=4326;${coorOfUser[0].location_string}`})
+                ) AS distance_meters;
+            `;
+    
+            console.log(`coordinaates : : ${coordinates}  ${JSON.stringify(dis)}`); 
+    
+            return {
+                broadcast_id: data.broadcast_id,
+                receiver_id: data.receiver_id,
+                text: data.text,
+                sender_id: data.sender_id,
+                longitude: parseFloat(longitude),
+                latitude: parseFloat(latitude),
+                distance: dis[0].distance_meters // Assuming dis returns an array of results
+            };
+        })
+    );
+    
     return processedData
 }
 }
