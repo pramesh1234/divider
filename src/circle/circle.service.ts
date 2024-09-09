@@ -52,8 +52,9 @@ const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location)
                     ST_GeogFromText(${`SRID=4326;${coorOfUser[0].location_string}`})
                 ) AS distance_meters;
             `;
+            const userDetail = await this.prismaService.$queryRaw`SELECT * from "User" WHERE user_id = ${data.sender_id}`
     
-            console.log(`coordinaates : : ${coordinates}  ${JSON.stringify(dis)}`); 
+          
     
             return {
                 broadcast_id: data.broadcast_id,
@@ -62,6 +63,7 @@ const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location)
                 sender_id: data.sender_id,
                 longitude: parseFloat(longitude),
                 latitude: parseFloat(latitude),
+                user : userDetail,
                 distance: `${dis[0].distance_meters/1000} km` // Assuming dis returns an array of results
             };
         })
