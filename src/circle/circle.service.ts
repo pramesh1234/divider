@@ -63,8 +63,8 @@ const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location)
                 sender_id: data.sender_id,
                 longitude: parseFloat(longitude),
                 latitude: parseFloat(latitude),
-                user : userDetail,
-                distance: `${dis[0].distance_meters/1000} km` // Assuming dis returns an array of results
+                user : userDetail[0],
+                distance: `${(dis[0].distance_meters/1000).toFixed(1)} km` // Assuming dis returns an array of results
             };
         })
     );
