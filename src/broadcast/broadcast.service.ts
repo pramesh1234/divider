@@ -55,4 +55,18 @@ export class BroadcastService {
     this.circleService.updateCircle(broadcastId, locationData, distance,senderUid);
     return data;
   }
+
+ async addCheckIn(userId:string,checkIn:boolean,broadcastId:string):Promise<any>{
+  const id = uuid();
+  const checkinData = {
+    id,
+    is_checked_in : checkIn,
+    user_id : userId,
+    broadcast_id : broadcastId
+  
+  
+  }
+const isSuccess = await this.prismaService.checkIn.create({ data : checkinData})
+return isSuccess
+ }
 }

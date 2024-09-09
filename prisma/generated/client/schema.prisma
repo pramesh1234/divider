@@ -27,7 +27,8 @@ model User {
 model Broadcast {
   broadcast_id String                                 @id @unique
   sender_id    String
-  text         String
+  image        String?
+  text         String?
   tag          String
   d_count      Int
   viewed_count Int
@@ -41,4 +42,12 @@ model Circle {
   receiver_id  String
   is_expired   Boolean
   created_at   DateTime @default(now())
+}
+
+model CheckIn {
+  id            String   @id @unique
+  broadcast_id  String
+  user_id       String
+  is_checked_in Boolean
+  checkin_time  DateTime @default(now())
 }

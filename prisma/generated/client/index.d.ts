@@ -28,6 +28,11 @@ export type Broadcast = $Result.DefaultSelection<Prisma.$BroadcastPayload>
  * 
  */
 export type Circle = $Result.DefaultSelection<Prisma.$CirclePayload>
+/**
+ * Model CheckIn
+ * 
+ */
+export type CheckIn = $Result.DefaultSelection<Prisma.$CheckInPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -180,6 +185,16 @@ export class PrismaClient<
     * ```
     */
   get circle(): Prisma.CircleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.checkIn`: Exposes CRUD operations for the **CheckIn** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CheckIns
+    * const checkIns = await prisma.checkIn.findMany()
+    * ```
+    */
+  get checkIn(): Prisma.CheckInDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -659,7 +674,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Broadcast: 'Broadcast',
-    Circle: 'Circle'
+    Circle: 'Circle',
+    CheckIn: 'CheckIn'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -675,7 +691,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "broadcast" | "circle"
+      modelProps: "user" | "broadcast" | "circle" | "checkIn"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -886,6 +902,76 @@ export namespace Prisma {
           count: {
             args: Prisma.CircleCountArgs<ExtArgs>
             result: $Utils.Optional<CircleCountAggregateOutputType> | number
+          }
+        }
+      }
+      CheckIn: {
+        payload: Prisma.$CheckInPayload<ExtArgs>
+        fields: Prisma.CheckInFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CheckInFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CheckInFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          findFirst: {
+            args: Prisma.CheckInFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CheckInFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          findMany: {
+            args: Prisma.CheckInFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>[]
+          }
+          create: {
+            args: Prisma.CheckInCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          createMany: {
+            args: Prisma.CheckInCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CheckInCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>[]
+          }
+          delete: {
+            args: Prisma.CheckInDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          update: {
+            args: Prisma.CheckInUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          deleteMany: {
+            args: Prisma.CheckInDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CheckInUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CheckInUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          aggregate: {
+            args: Prisma.CheckInAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCheckIn>
+          }
+          groupBy: {
+            args: Prisma.CheckInGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CheckInGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CheckInCountArgs<ExtArgs>
+            result: $Utils.Optional<CheckInCountAggregateOutputType> | number
           }
         }
       }
@@ -1977,6 +2063,7 @@ export namespace Prisma {
   export type BroadcastMinAggregateOutputType = {
     broadcast_id: string | null
     sender_id: string | null
+    image: string | null
     text: string | null
     tag: string | null
     d_count: number | null
@@ -1987,6 +2074,7 @@ export namespace Prisma {
   export type BroadcastMaxAggregateOutputType = {
     broadcast_id: string | null
     sender_id: string | null
+    image: string | null
     text: string | null
     tag: string | null
     d_count: number | null
@@ -1997,6 +2085,7 @@ export namespace Prisma {
   export type BroadcastCountAggregateOutputType = {
     broadcast_id: number
     sender_id: number
+    image: number
     text: number
     tag: number
     d_count: number
@@ -2019,6 +2108,7 @@ export namespace Prisma {
   export type BroadcastMinAggregateInputType = {
     broadcast_id?: true
     sender_id?: true
+    image?: true
     text?: true
     tag?: true
     d_count?: true
@@ -2029,6 +2119,7 @@ export namespace Prisma {
   export type BroadcastMaxAggregateInputType = {
     broadcast_id?: true
     sender_id?: true
+    image?: true
     text?: true
     tag?: true
     d_count?: true
@@ -2039,6 +2130,7 @@ export namespace Prisma {
   export type BroadcastCountAggregateInputType = {
     broadcast_id?: true
     sender_id?: true
+    image?: true
     text?: true
     tag?: true
     d_count?: true
@@ -2136,7 +2228,8 @@ export namespace Prisma {
   export type BroadcastGroupByOutputType = {
     broadcast_id: string
     sender_id: string
-    text: string
+    image: string | null
+    text: string | null
     tag: string
     d_count: number
     viewed_count: number
@@ -2165,6 +2258,7 @@ export namespace Prisma {
   export type BroadcastSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     broadcast_id?: boolean
     sender_id?: boolean
+    image?: boolean
     text?: boolean
     tag?: boolean
     d_count?: boolean
@@ -2175,6 +2269,7 @@ export namespace Prisma {
   export type BroadcastSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     broadcast_id?: boolean
     sender_id?: boolean
+    image?: boolean
     text?: boolean
     tag?: boolean
     d_count?: boolean
@@ -2185,6 +2280,7 @@ export namespace Prisma {
   export type BroadcastSelectScalar = {
     broadcast_id?: boolean
     sender_id?: boolean
+    image?: boolean
     text?: boolean
     tag?: boolean
     d_count?: boolean
@@ -2199,7 +2295,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       broadcast_id: string
       sender_id: string
-      text: string
+      image: string | null
+      text: string | null
       tag: string
       d_count: number
       viewed_count: number
@@ -2599,6 +2696,7 @@ export namespace Prisma {
   interface BroadcastFieldRefs {
     readonly broadcast_id: FieldRef<"Broadcast", 'String'>
     readonly sender_id: FieldRef<"Broadcast", 'String'>
+    readonly image: FieldRef<"Broadcast", 'String'>
     readonly text: FieldRef<"Broadcast", 'String'>
     readonly tag: FieldRef<"Broadcast", 'String'>
     readonly d_count: FieldRef<"Broadcast", 'Int'>
@@ -3771,6 +3869,884 @@ export namespace Prisma {
 
 
   /**
+   * Model CheckIn
+   */
+
+  export type AggregateCheckIn = {
+    _count: CheckInCountAggregateOutputType | null
+    _min: CheckInMinAggregateOutputType | null
+    _max: CheckInMaxAggregateOutputType | null
+  }
+
+  export type CheckInMinAggregateOutputType = {
+    id: string | null
+    broadcast_id: string | null
+    user_id: string | null
+    is_checked_in: boolean | null
+    checkin_time: Date | null
+  }
+
+  export type CheckInMaxAggregateOutputType = {
+    id: string | null
+    broadcast_id: string | null
+    user_id: string | null
+    is_checked_in: boolean | null
+    checkin_time: Date | null
+  }
+
+  export type CheckInCountAggregateOutputType = {
+    id: number
+    broadcast_id: number
+    user_id: number
+    is_checked_in: number
+    checkin_time: number
+    _all: number
+  }
+
+
+  export type CheckInMinAggregateInputType = {
+    id?: true
+    broadcast_id?: true
+    user_id?: true
+    is_checked_in?: true
+    checkin_time?: true
+  }
+
+  export type CheckInMaxAggregateInputType = {
+    id?: true
+    broadcast_id?: true
+    user_id?: true
+    is_checked_in?: true
+    checkin_time?: true
+  }
+
+  export type CheckInCountAggregateInputType = {
+    id?: true
+    broadcast_id?: true
+    user_id?: true
+    is_checked_in?: true
+    checkin_time?: true
+    _all?: true
+  }
+
+  export type CheckInAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheckIn to aggregate.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CheckIns
+    **/
+    _count?: true | CheckInCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CheckInMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CheckInMaxAggregateInputType
+  }
+
+  export type GetCheckInAggregateType<T extends CheckInAggregateArgs> = {
+        [P in keyof T & keyof AggregateCheckIn]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCheckIn[P]>
+      : GetScalarType<T[P], AggregateCheckIn[P]>
+  }
+
+
+
+
+  export type CheckInGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheckInWhereInput
+    orderBy?: CheckInOrderByWithAggregationInput | CheckInOrderByWithAggregationInput[]
+    by: CheckInScalarFieldEnum[] | CheckInScalarFieldEnum
+    having?: CheckInScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CheckInCountAggregateInputType | true
+    _min?: CheckInMinAggregateInputType
+    _max?: CheckInMaxAggregateInputType
+  }
+
+  export type CheckInGroupByOutputType = {
+    id: string
+    broadcast_id: string
+    user_id: string
+    is_checked_in: boolean
+    checkin_time: Date
+    _count: CheckInCountAggregateOutputType | null
+    _min: CheckInMinAggregateOutputType | null
+    _max: CheckInMaxAggregateOutputType | null
+  }
+
+  type GetCheckInGroupByPayload<T extends CheckInGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CheckInGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CheckInGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CheckInGroupByOutputType[P]>
+            : GetScalarType<T[P], CheckInGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CheckInSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    broadcast_id?: boolean
+    user_id?: boolean
+    is_checked_in?: boolean
+    checkin_time?: boolean
+  }, ExtArgs["result"]["checkIn"]>
+
+  export type CheckInSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    broadcast_id?: boolean
+    user_id?: boolean
+    is_checked_in?: boolean
+    checkin_time?: boolean
+  }, ExtArgs["result"]["checkIn"]>
+
+  export type CheckInSelectScalar = {
+    id?: boolean
+    broadcast_id?: boolean
+    user_id?: boolean
+    is_checked_in?: boolean
+    checkin_time?: boolean
+  }
+
+
+  export type $CheckInPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CheckIn"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      broadcast_id: string
+      user_id: string
+      is_checked_in: boolean
+      checkin_time: Date
+    }, ExtArgs["result"]["checkIn"]>
+    composites: {}
+  }
+
+  type CheckInGetPayload<S extends boolean | null | undefined | CheckInDefaultArgs> = $Result.GetResult<Prisma.$CheckInPayload, S>
+
+  type CheckInCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CheckInFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CheckInCountAggregateInputType | true
+    }
+
+  export interface CheckInDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CheckIn'], meta: { name: 'CheckIn' } }
+    /**
+     * Find zero or one CheckIn that matches the filter.
+     * @param {CheckInFindUniqueArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CheckInFindUniqueArgs>(args: SelectSubset<T, CheckInFindUniqueArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CheckIn that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CheckInFindUniqueOrThrowArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CheckInFindUniqueOrThrowArgs>(args: SelectSubset<T, CheckInFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CheckIn that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInFindFirstArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CheckInFindFirstArgs>(args?: SelectSubset<T, CheckInFindFirstArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CheckIn that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInFindFirstOrThrowArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CheckInFindFirstOrThrowArgs>(args?: SelectSubset<T, CheckInFindFirstOrThrowArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CheckIns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CheckIns
+     * const checkIns = await prisma.checkIn.findMany()
+     * 
+     * // Get first 10 CheckIns
+     * const checkIns = await prisma.checkIn.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const checkInWithIdOnly = await prisma.checkIn.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CheckInFindManyArgs>(args?: SelectSubset<T, CheckInFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CheckIn.
+     * @param {CheckInCreateArgs} args - Arguments to create a CheckIn.
+     * @example
+     * // Create one CheckIn
+     * const CheckIn = await prisma.checkIn.create({
+     *   data: {
+     *     // ... data to create a CheckIn
+     *   }
+     * })
+     * 
+     */
+    create<T extends CheckInCreateArgs>(args: SelectSubset<T, CheckInCreateArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CheckIns.
+     * @param {CheckInCreateManyArgs} args - Arguments to create many CheckIns.
+     * @example
+     * // Create many CheckIns
+     * const checkIn = await prisma.checkIn.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CheckInCreateManyArgs>(args?: SelectSubset<T, CheckInCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CheckIns and returns the data saved in the database.
+     * @param {CheckInCreateManyAndReturnArgs} args - Arguments to create many CheckIns.
+     * @example
+     * // Create many CheckIns
+     * const checkIn = await prisma.checkIn.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CheckIns and only return the `id`
+     * const checkInWithIdOnly = await prisma.checkIn.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CheckInCreateManyAndReturnArgs>(args?: SelectSubset<T, CheckInCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CheckIn.
+     * @param {CheckInDeleteArgs} args - Arguments to delete one CheckIn.
+     * @example
+     * // Delete one CheckIn
+     * const CheckIn = await prisma.checkIn.delete({
+     *   where: {
+     *     // ... filter to delete one CheckIn
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CheckInDeleteArgs>(args: SelectSubset<T, CheckInDeleteArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CheckIn.
+     * @param {CheckInUpdateArgs} args - Arguments to update one CheckIn.
+     * @example
+     * // Update one CheckIn
+     * const checkIn = await prisma.checkIn.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CheckInUpdateArgs>(args: SelectSubset<T, CheckInUpdateArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CheckIns.
+     * @param {CheckInDeleteManyArgs} args - Arguments to filter CheckIns to delete.
+     * @example
+     * // Delete a few CheckIns
+     * const { count } = await prisma.checkIn.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CheckInDeleteManyArgs>(args?: SelectSubset<T, CheckInDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CheckIns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CheckIns
+     * const checkIn = await prisma.checkIn.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CheckInUpdateManyArgs>(args: SelectSubset<T, CheckInUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CheckIn.
+     * @param {CheckInUpsertArgs} args - Arguments to update or create a CheckIn.
+     * @example
+     * // Update or create a CheckIn
+     * const checkIn = await prisma.checkIn.upsert({
+     *   create: {
+     *     // ... data to create a CheckIn
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CheckIn we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CheckInUpsertArgs>(args: SelectSubset<T, CheckInUpsertArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CheckIns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInCountArgs} args - Arguments to filter CheckIns to count.
+     * @example
+     * // Count the number of CheckIns
+     * const count = await prisma.checkIn.count({
+     *   where: {
+     *     // ... the filter for the CheckIns we want to count
+     *   }
+     * })
+    **/
+    count<T extends CheckInCountArgs>(
+      args?: Subset<T, CheckInCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CheckInCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CheckIn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CheckInAggregateArgs>(args: Subset<T, CheckInAggregateArgs>): Prisma.PrismaPromise<GetCheckInAggregateType<T>>
+
+    /**
+     * Group by CheckIn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CheckInGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CheckInGroupByArgs['orderBy'] }
+        : { orderBy?: CheckInGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CheckInGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCheckInGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CheckIn model
+   */
+  readonly fields: CheckInFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CheckIn.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CheckInClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CheckIn model
+   */ 
+  interface CheckInFieldRefs {
+    readonly id: FieldRef<"CheckIn", 'String'>
+    readonly broadcast_id: FieldRef<"CheckIn", 'String'>
+    readonly user_id: FieldRef<"CheckIn", 'String'>
+    readonly is_checked_in: FieldRef<"CheckIn", 'Boolean'>
+    readonly checkin_time: FieldRef<"CheckIn", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CheckIn findUnique
+   */
+  export type CheckInFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn findUniqueOrThrow
+   */
+  export type CheckInFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn findFirst
+   */
+  export type CheckInFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheckIns.
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheckIns.
+     */
+    distinct?: CheckInScalarFieldEnum | CheckInScalarFieldEnum[]
+  }
+
+  /**
+   * CheckIn findFirstOrThrow
+   */
+  export type CheckInFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheckIns.
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheckIns.
+     */
+    distinct?: CheckInScalarFieldEnum | CheckInScalarFieldEnum[]
+  }
+
+  /**
+   * CheckIn findMany
+   */
+  export type CheckInFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Filter, which CheckIns to fetch.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CheckIns.
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    distinct?: CheckInScalarFieldEnum | CheckInScalarFieldEnum[]
+  }
+
+  /**
+   * CheckIn create
+   */
+  export type CheckInCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * The data needed to create a CheckIn.
+     */
+    data: XOR<CheckInCreateInput, CheckInUncheckedCreateInput>
+  }
+
+  /**
+   * CheckIn createMany
+   */
+  export type CheckInCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CheckIns.
+     */
+    data: CheckInCreateManyInput | CheckInCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CheckIn createManyAndReturn
+   */
+  export type CheckInCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CheckIns.
+     */
+    data: CheckInCreateManyInput | CheckInCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CheckIn update
+   */
+  export type CheckInUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * The data needed to update a CheckIn.
+     */
+    data: XOR<CheckInUpdateInput, CheckInUncheckedUpdateInput>
+    /**
+     * Choose, which CheckIn to update.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn updateMany
+   */
+  export type CheckInUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CheckIns.
+     */
+    data: XOR<CheckInUpdateManyMutationInput, CheckInUncheckedUpdateManyInput>
+    /**
+     * Filter which CheckIns to update
+     */
+    where?: CheckInWhereInput
+  }
+
+  /**
+   * CheckIn upsert
+   */
+  export type CheckInUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * The filter to search for the CheckIn to update in case it exists.
+     */
+    where: CheckInWhereUniqueInput
+    /**
+     * In case the CheckIn found by the `where` argument doesn't exist, create a new CheckIn with this data.
+     */
+    create: XOR<CheckInCreateInput, CheckInUncheckedCreateInput>
+    /**
+     * In case the CheckIn was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CheckInUpdateInput, CheckInUncheckedUpdateInput>
+  }
+
+  /**
+   * CheckIn delete
+   */
+  export type CheckInDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Filter which CheckIn to delete.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn deleteMany
+   */
+  export type CheckInDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheckIns to delete
+     */
+    where?: CheckInWhereInput
+  }
+
+  /**
+   * CheckIn without action
+   */
+  export type CheckInDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3800,6 +4776,7 @@ export namespace Prisma {
   export const BroadcastScalarFieldEnum: {
     broadcast_id: 'broadcast_id',
     sender_id: 'sender_id',
+    image: 'image',
     text: 'text',
     tag: 'tag',
     d_count: 'd_count',
@@ -3819,6 +4796,17 @@ export namespace Prisma {
   };
 
   export type CircleScalarFieldEnum = (typeof CircleScalarFieldEnum)[keyof typeof CircleScalarFieldEnum]
+
+
+  export const CheckInScalarFieldEnum: {
+    id: 'id',
+    broadcast_id: 'broadcast_id',
+    user_id: 'user_id',
+    is_checked_in: 'is_checked_in',
+    checkin_time: 'checkin_time'
+  };
+
+  export type CheckInScalarFieldEnum = (typeof CheckInScalarFieldEnum)[keyof typeof CheckInScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3984,7 +4972,8 @@ export namespace Prisma {
     NOT?: BroadcastWhereInput | BroadcastWhereInput[]
     broadcast_id?: StringFilter<"Broadcast"> | string
     sender_id?: StringFilter<"Broadcast"> | string
-    text?: StringFilter<"Broadcast"> | string
+    image?: StringNullableFilter<"Broadcast"> | string | null
+    text?: StringNullableFilter<"Broadcast"> | string | null
     tag?: StringFilter<"Broadcast"> | string
     d_count?: IntFilter<"Broadcast"> | number
     viewed_count?: IntFilter<"Broadcast"> | number
@@ -3994,7 +4983,8 @@ export namespace Prisma {
   export type BroadcastOrderByWithRelationInput = {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
-    text?: SortOrder
+    image?: SortOrderInput | SortOrder
+    text?: SortOrderInput | SortOrder
     tag?: SortOrder
     d_count?: SortOrder
     viewed_count?: SortOrder
@@ -4007,7 +4997,8 @@ export namespace Prisma {
     OR?: BroadcastWhereInput[]
     NOT?: BroadcastWhereInput | BroadcastWhereInput[]
     sender_id?: StringFilter<"Broadcast"> | string
-    text?: StringFilter<"Broadcast"> | string
+    image?: StringNullableFilter<"Broadcast"> | string | null
+    text?: StringNullableFilter<"Broadcast"> | string | null
     tag?: StringFilter<"Broadcast"> | string
     d_count?: IntFilter<"Broadcast"> | number
     viewed_count?: IntFilter<"Broadcast"> | number
@@ -4017,7 +5008,8 @@ export namespace Prisma {
   export type BroadcastOrderByWithAggregationInput = {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
-    text?: SortOrder
+    image?: SortOrderInput | SortOrder
+    text?: SortOrderInput | SortOrder
     tag?: SortOrder
     d_count?: SortOrder
     viewed_count?: SortOrder
@@ -4035,7 +5027,8 @@ export namespace Prisma {
     NOT?: BroadcastScalarWhereWithAggregatesInput | BroadcastScalarWhereWithAggregatesInput[]
     broadcast_id?: StringWithAggregatesFilter<"Broadcast"> | string
     sender_id?: StringWithAggregatesFilter<"Broadcast"> | string
-    text?: StringWithAggregatesFilter<"Broadcast"> | string
+    image?: StringNullableWithAggregatesFilter<"Broadcast"> | string | null
+    text?: StringNullableWithAggregatesFilter<"Broadcast"> | string | null
     tag?: StringWithAggregatesFilter<"Broadcast"> | string
     d_count?: IntWithAggregatesFilter<"Broadcast"> | number
     viewed_count?: IntWithAggregatesFilter<"Broadcast"> | number
@@ -4092,6 +5085,58 @@ export namespace Prisma {
     receiver_id?: StringWithAggregatesFilter<"Circle"> | string
     is_expired?: BoolWithAggregatesFilter<"Circle"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Circle"> | Date | string
+  }
+
+  export type CheckInWhereInput = {
+    AND?: CheckInWhereInput | CheckInWhereInput[]
+    OR?: CheckInWhereInput[]
+    NOT?: CheckInWhereInput | CheckInWhereInput[]
+    id?: StringFilter<"CheckIn"> | string
+    broadcast_id?: StringFilter<"CheckIn"> | string
+    user_id?: StringFilter<"CheckIn"> | string
+    is_checked_in?: BoolFilter<"CheckIn"> | boolean
+    checkin_time?: DateTimeFilter<"CheckIn"> | Date | string
+  }
+
+  export type CheckInOrderByWithRelationInput = {
+    id?: SortOrder
+    broadcast_id?: SortOrder
+    user_id?: SortOrder
+    is_checked_in?: SortOrder
+    checkin_time?: SortOrder
+  }
+
+  export type CheckInWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CheckInWhereInput | CheckInWhereInput[]
+    OR?: CheckInWhereInput[]
+    NOT?: CheckInWhereInput | CheckInWhereInput[]
+    broadcast_id?: StringFilter<"CheckIn"> | string
+    user_id?: StringFilter<"CheckIn"> | string
+    is_checked_in?: BoolFilter<"CheckIn"> | boolean
+    checkin_time?: DateTimeFilter<"CheckIn"> | Date | string
+  }, "id" | "id">
+
+  export type CheckInOrderByWithAggregationInput = {
+    id?: SortOrder
+    broadcast_id?: SortOrder
+    user_id?: SortOrder
+    is_checked_in?: SortOrder
+    checkin_time?: SortOrder
+    _count?: CheckInCountOrderByAggregateInput
+    _max?: CheckInMaxOrderByAggregateInput
+    _min?: CheckInMinOrderByAggregateInput
+  }
+
+  export type CheckInScalarWhereWithAggregatesInput = {
+    AND?: CheckInScalarWhereWithAggregatesInput | CheckInScalarWhereWithAggregatesInput[]
+    OR?: CheckInScalarWhereWithAggregatesInput[]
+    NOT?: CheckInScalarWhereWithAggregatesInput | CheckInScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CheckIn"> | string
+    broadcast_id?: StringWithAggregatesFilter<"CheckIn"> | string
+    user_id?: StringWithAggregatesFilter<"CheckIn"> | string
+    is_checked_in?: BoolWithAggregatesFilter<"CheckIn"> | boolean
+    checkin_time?: DateTimeWithAggregatesFilter<"CheckIn"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -4167,7 +5212,8 @@ export namespace Prisma {
   export type BroadcastCreateInput = {
     broadcast_id: string
     sender_id: string
-    text: string
+    image?: string | null
+    text?: string | null
     tag: string
     d_count: number
     viewed_count: number
@@ -4177,7 +5223,8 @@ export namespace Prisma {
   export type BroadcastUncheckedCreateInput = {
     broadcast_id: string
     sender_id: string
-    text: string
+    image?: string | null
+    text?: string | null
     tag: string
     d_count: number
     viewed_count: number
@@ -4187,7 +5234,8 @@ export namespace Prisma {
   export type BroadcastUpdateInput = {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: StringFieldUpdateOperationsInput | string
     d_count?: IntFieldUpdateOperationsInput | number
     viewed_count?: IntFieldUpdateOperationsInput | number
@@ -4197,7 +5245,8 @@ export namespace Prisma {
   export type BroadcastUncheckedUpdateInput = {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: StringFieldUpdateOperationsInput | string
     d_count?: IntFieldUpdateOperationsInput | number
     viewed_count?: IntFieldUpdateOperationsInput | number
@@ -4207,7 +5256,8 @@ export namespace Prisma {
   export type BroadcastCreateManyInput = {
     broadcast_id: string
     sender_id: string
-    text: string
+    image?: string | null
+    text?: string | null
     tag: string
     d_count: number
     viewed_count: number
@@ -4217,7 +5267,8 @@ export namespace Prisma {
   export type BroadcastUpdateManyMutationInput = {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: StringFieldUpdateOperationsInput | string
     d_count?: IntFieldUpdateOperationsInput | number
     viewed_count?: IntFieldUpdateOperationsInput | number
@@ -4227,7 +5278,8 @@ export namespace Prisma {
   export type BroadcastUncheckedUpdateManyInput = {
     broadcast_id?: StringFieldUpdateOperationsInput | string
     sender_id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: StringFieldUpdateOperationsInput | string
     d_count?: IntFieldUpdateOperationsInput | number
     viewed_count?: IntFieldUpdateOperationsInput | number
@@ -4288,6 +5340,62 @@ export namespace Prisma {
     receiver_id?: StringFieldUpdateOperationsInput | string
     is_expired?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInCreateInput = {
+    id: string
+    broadcast_id: string
+    user_id: string
+    is_checked_in: boolean
+    checkin_time?: Date | string
+  }
+
+  export type CheckInUncheckedCreateInput = {
+    id: string
+    broadcast_id: string
+    user_id: string
+    is_checked_in: boolean
+    checkin_time?: Date | string
+  }
+
+  export type CheckInUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    broadcast_id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    is_checked_in?: BoolFieldUpdateOperationsInput | boolean
+    checkin_time?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    broadcast_id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    is_checked_in?: BoolFieldUpdateOperationsInput | boolean
+    checkin_time?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInCreateManyInput = {
+    id: string
+    broadcast_id: string
+    user_id: string
+    is_checked_in: boolean
+    checkin_time?: Date | string
+  }
+
+  export type CheckInUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    broadcast_id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    is_checked_in?: BoolFieldUpdateOperationsInput | boolean
+    checkin_time?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    broadcast_id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    is_checked_in?: BoolFieldUpdateOperationsInput | boolean
+    checkin_time?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4430,6 +5538,7 @@ export namespace Prisma {
   export type BroadcastCountOrderByAggregateInput = {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
+    image?: SortOrder
     text?: SortOrder
     tag?: SortOrder
     d_count?: SortOrder
@@ -4445,6 +5554,7 @@ export namespace Prisma {
   export type BroadcastMaxOrderByAggregateInput = {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
+    image?: SortOrder
     text?: SortOrder
     tag?: SortOrder
     d_count?: SortOrder
@@ -4455,6 +5565,7 @@ export namespace Prisma {
   export type BroadcastMinOrderByAggregateInput = {
     broadcast_id?: SortOrder
     sender_id?: SortOrder
+    image?: SortOrder
     text?: SortOrder
     tag?: SortOrder
     d_count?: SortOrder
@@ -4518,6 +5629,30 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type CheckInCountOrderByAggregateInput = {
+    id?: SortOrder
+    broadcast_id?: SortOrder
+    user_id?: SortOrder
+    is_checked_in?: SortOrder
+    checkin_time?: SortOrder
+  }
+
+  export type CheckInMaxOrderByAggregateInput = {
+    id?: SortOrder
+    broadcast_id?: SortOrder
+    user_id?: SortOrder
+    is_checked_in?: SortOrder
+    checkin_time?: SortOrder
+  }
+
+  export type CheckInMinOrderByAggregateInput = {
+    id?: SortOrder
+    broadcast_id?: SortOrder
+    user_id?: SortOrder
+    is_checked_in?: SortOrder
+    checkin_time?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4710,6 +5845,10 @@ export namespace Prisma {
      * @deprecated Use CircleDefaultArgs instead
      */
     export type CircleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CircleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CheckInDefaultArgs instead
+     */
+    export type CheckInArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CheckInDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -28,12 +28,13 @@ let filteredUsers = newdata.filter(user => user.user_id !== senderUid);
     }
 }
 async getBroadcastByUserId(userId:string):Promise<any>{
-    console.log(`data broadcast userId ${userId}}`)
     const rawData: Array<any> = await this.prismaService.$queryRaw`
-    SELECT ST_AsText(b_location) as b_location_string, "Broadcast".broadcast_id, "Broadcast".created_at,receiver_id, text, sender_id
+    SELECT ST_AsText(b_location) as b_location_string, "Broadcast".broadcast_id, "Broadcast".created_at,receiver_id, text, sender_id, COALESCE("CheckIn".is_checked_in, false) AS is_checked_in
     FROM "Broadcast" 
-    INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id" where receiver_id = ${userId}
+    INNER JOIN "Circle" ON "Circle"."broadcast_id" = "Broadcast"."broadcast_id" LEFT JOIN 
+    "CheckIn" ON "CheckIn"."broadcast_id" = "Broadcast"."broadcast_id" where receiver_id = ${userId}
 `;
+console.log("rawData: ", rawData)
 const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location) as location_string from  "User" Where "user_id" = ${userId}`
 
     console.log(`data broadcast userId ${JSON.stringify(coorOfUser)}}`)
@@ -54,7 +55,7 @@ const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location)
             `;
             const userDetail = await this.prismaService.$queryRaw`SELECT first_name, last_name, user_name, user_id from "User" WHERE user_id = ${data.sender_id}`
     
-          
+          console.log(`ddatatata : ${data}`)
     
             return {
                 broadcast_id: data.broadcast_id,
@@ -65,7 +66,8 @@ const coorOfUser = await this.prismaService.$queryRaw`SELECT ST_AsText(location)
                 longitude: parseFloat(longitude),
                 latitude: parseFloat(latitude),
                 user : userDetail[0],
-                distance: `${(dis[0].distance_meters/1000).toFixed(1)} km` // Assuming dis returns an array of results
+                distance: `${(dis[0].distance_meters/1000).toFixed(1)} km`,
+                isCheckedIn :!!data.is_checked_in
             };
         })
     );

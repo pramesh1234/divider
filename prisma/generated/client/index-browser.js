@@ -132,6 +132,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.BroadcastScalarFieldEnum = {
   broadcast_id: 'broadcast_id',
   sender_id: 'sender_id',
+  image: 'image',
   text: 'text',
   tag: 'tag',
   d_count: 'd_count',
@@ -145,6 +146,14 @@ exports.Prisma.CircleScalarFieldEnum = {
   receiver_id: 'receiver_id',
   is_expired: 'is_expired',
   created_at: 'created_at'
+};
+
+exports.Prisma.CheckInScalarFieldEnum = {
+  id: 'id',
+  broadcast_id: 'broadcast_id',
+  user_id: 'user_id',
+  is_checked_in: 'is_checked_in',
+  checkin_time: 'checkin_time'
 };
 
 exports.Prisma.SortOrder = {
@@ -166,7 +175,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   Broadcast: 'Broadcast',
-  Circle: 'Circle'
+  Circle: 'Circle',
+  CheckIn: 'CheckIn'
 };
 
 /**

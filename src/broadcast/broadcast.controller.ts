@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
 import { BroadCastDto } from './dto/broadcast.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { BroadcastService } from './broadcast.service';
+import { CheckInDto } from './dto/checkin.dto';
 
 @Controller('broadcast')
 export class BroadcastController {
@@ -28,6 +29,22 @@ export class BroadcastController {
             return {
                 message: "Something went wrong",
               };
+    }
+
+    }
+    @UseGuards(AuthGuard)
+    @Post('/checkin')
+    async addCheckIn(@Body() body:CheckInDto, @Request() req){
+    const checkedIn = await this.broadcastService.addCheckIn(req?.user.userId,body.checkIn,body.broadcastId)
+    if(checkedIn){
+      return{
+        data:checkedIn,
+        message: "Checked In Successfully"
+      }
+    }else{
+      return{
+        message: "Check In Failed"
+      }
     }
 
     }
