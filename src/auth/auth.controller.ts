@@ -13,10 +13,11 @@ import { AuthService } from "./auth.service";
 import { UserDto } from "./dto/UserDto";
 import { AuthGuard } from "./auth.guard";
 import { last } from "rxjs";
+import { FirebaseService } from "./FirebaseService";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private firebaseService: FirebaseService) {}
   @Post("/sendOtp")
   public async numberValidation(@Body() body: NumberValidationDto) {
     const num = body.phoneNumber;
@@ -25,7 +26,9 @@ export class AuthController {
       const otp = `${random}`;
       const countryCode = body?.countryCode;
       const phoneNumber = body?.phoneNumber;
-      await this.authService.sendOtp(phoneNumber, countryCode, otp);
+      const verificationId = await this.firebaseService.sendOtp(phoneNumber);
+      console.log(`firebse otp :: ${verificationId}`)
+      await this.authService.sendOtp(phoneNumber, countryCode, verificationId);
       return {
         message: "Otp Sent Successfully",
         data: { otp },

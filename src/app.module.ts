@@ -12,6 +12,7 @@ import { BroadcastModule } from './broadcast/broadcast.module';
 import { CircleModule } from './circle/circle.module';
 import { CircleController } from "./circle/circle.controller";
 import { CircleService } from "./circle/circle.service";
+import { FirebaseService } from "./auth/FirebaseService";
 
 @Module({
   imports: [
@@ -26,6 +27,6 @@ import { CircleService } from "./circle/circle.service";
     CircleModule,
   ],
   controllers: [AppController, AuthController, CircleController],
-  providers: [AppService, AuthService, PrismaService,CircleService],
+  providers: [AppService, AuthService, PrismaService,CircleService,FirebaseService],
 })
 export class AppModule {}
